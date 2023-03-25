@@ -4,7 +4,7 @@
     "type-enum": [
       2,
       "always",
-      ["feat", "fix", "docs", "perf", "refactor", "build", "ci", "revert", "style", "test", "chore"]
+      ["feat", "fix", "docs", "perf", "refactor", "build", "ci", "revert", "style", "test", "chore", "init"]
     ],
     "header-max-length": [2, "always", 70],
     "body-max-line-length": [2, "always", 80],
