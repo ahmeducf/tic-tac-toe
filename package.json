@@ -1,0 +1,25 @@
+{
+  "name": "tic-tac-toe",
+  "version": "0.0.0",
+  "description": "A Tic Tac Toe game you can play in your browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmeducf/tic-tac-toe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmeducf/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/ahmeducf/tic-tac-toe#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
