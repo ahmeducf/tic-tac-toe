@@ -202,12 +202,7 @@ const HumanPlayer = (name, symbol) => ({ ...Player(name, symbol) });
  * AIPlayer is a module that contains an AI player object (inherits from Player)
  * @param {string} symbol - call it with 'X' or 'O'
  * @returns {Object} AIPlayer object
- * @property {function} getName - returns the name of the player
- * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
- * @property {function} getNextEasyMove - returns the next move for the AI player (easy mode)
- * @property {function} getNextMediumMove - returns the next move for the AI player (medium mode)
- * @property {function} getNextHardMove - returns the next move for the AI player (hard mode)
- * @property {function} getNextUnbeatableMove - returns the next move for the AI player (unbeatable mode)
+ * @property {function} getNextMove - returns the next move for the AI based on difficulty level
  */
 const AIPlayer = (symbol) => {
   /**
@@ -323,7 +318,7 @@ const AIPlayer = (symbol) => {
   };
 
   /**
-   * getNextMove returns the next move for the AI
+   * getNextMove returns the next move for the AI based on difficulty level
    * @param {GameBoard} board - call it with the current board
    * @param {number} difficultyPercentage - call it with the difficulty percentage (0-100)
    * @returns {Array} nextMove
@@ -339,39 +334,89 @@ const AIPlayer = (symbol) => {
     return getRandomMove(board);
   };
 
-  /**
-   * getNextEasyMove returns the next move when the difficulty is easy
-   * @param {GameBoard} board - call it with the current board
-   * @returns {Array} nextMove - random move
-   */
-  const getNextEasyMove = (board) => getNextMove(board, 0);
+  return { getNextMove };
+};
+
+/**
+ * EasyAIPlayer is a modules that contains the logic for the easy AI player
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} EasyAIPlayer
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getNextMove - returns the next move for the AI with a difficulty of easy (random move)
+ */
+const EasyAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer(symbol);
 
   /**
-   * getNextMediumMove returns the next move when the difficulty is medium
+   * getNextMove returns the next move for the AI with a difficulty of easy (random move)
    * @param {GameBoard} board - call it with the current board
-   * @returns {Array} nextMove - the best move with a 50% chance
+   * @returns {Array} nextMove
    */
-  const getNextMediumMove = (board) => getNextMove(board, 50);
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 0);
+
+  return { ...Player('Easy AI', symbol), getNextMove };
+};
+
+/**
+ * MediumAIPlayer is a modules that contains the logic for the medium AI player
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} MediumAIPlayer
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getNextMove - returns the next move for the AI with a difficulty of medium (50% chance of best move)
+ */
+const MediumAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer(symbol);
 
   /**
-   * getNextHardMove returns the next move when the difficulty is hard
+   * getNextMove returns the next move for the AI with a difficulty of medium (50% chance of best move)
    * @param {GameBoard} board - call it with the current board
-   * @returns {Array} nextMove - the best move with a 75% chance
+   * @returns {Array} nextMove
    */
-  const getNextHardMove = (board) => getNextMove(board, 75);
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 50);
+
+  return { ...Player('Medium AI', symbol), getNextMove };
+};
+
+/**
+ * HardAIPlayer is a modules that contains the logic for the hard AI player
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} HardAIPlayer
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getNextMove - returns the next move for the AI with a difficulty of hard (75% chance of best move)
+ */
+const HardAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer(symbol);
 
   /**
-   * getNextUnbeatableMove returns the next move when the difficulty is unbeatable
+   * getNextMove returns the next move for the AI with a difficulty of hard (75% chance of best move)
    * @param {GameBoard} board - call it with the current board
-   * @returns {Array} nextMove - the best move
+   * @returns {Array} nextMove
    */
-  const getNextUnbeatableMove = (board) => getBestMove(board);
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 75);
 
-  return {
-    ...Player('AI', symbol),
-    getNextEasyMove,
-    getNextMediumMove,
-    getNextHardMove,
-    getNextUnbeatableMove,
-  };
+  return { ...Player('Hard AI', symbol), getNextMove };
+};
+
+/**
+ * UnbeatableAIPlayer is a modules that contains the logic for the unbeatable AI player
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} UnbeatableAIPlayer
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getNextMove - returns the next move for the AI with a difficulty of unbeatable (best move possible)
+ */
+const UnbeatableAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer(symbol);
+
+  /**
+   * getNextMove returns the next move for the AI with a difficulty of unbeatable (best move possible)
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} nextMove
+   * */
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 100);
+
+  return { ...Player('Unbeatable AI', symbol), getNextMove };
 };
