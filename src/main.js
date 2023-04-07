@@ -115,3 +115,13 @@ const GameBoard = (() => {
     printBoard,
   };
 })();
+
+// HumanPlayer is a module that contains a human player object
+const HumanPlayer = (name, symbol) => {
+  // getName returns the name of the player
+  const getName = () => name;
+  // getSymbol returns the symbol of the player ('X' or 'O')
+  const getSymbol = () => symbol;
+
+  return { getName, getSymbol };
+};
