@@ -125,3 +125,13 @@ const HumanPlayer = (name, symbol) => {
 
   return { getName, getSymbol };
 };
+
+// AIPlayer is a module that contains an AI player object
+const AIPlayer = (symbol) => {
+  // getName returns the name of the player
+  const getName = () => 'AI';
+  // getSymbol returns the symbol of the player ('X' or 'O')
+  const getSymbol = () => symbol;
+
+  return { getName, getSymbol };
+};
