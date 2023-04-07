@@ -226,5 +226,13 @@ const AIPlayer = (symbol) => {
     return bestMove;
   };
 
+  // getRandomMove returns a random next move for the AI
+  const getRandomMove = (board) => {
+    const emptyCells = board.getEmptyCells();
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+
+    return emptyCells[randomIndex];
+  };
+
   return { getName, getSymbol, getBestMove };
 };
