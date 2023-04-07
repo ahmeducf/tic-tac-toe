@@ -165,14 +165,14 @@ const GameBoard = (() => {
 })();
 
 /**
- * HumanPlayer is a module that contains a human player object
+ * Player is a module that contains a player object
  * @param {string} name - call it with the player's name
  * @param {string} symbol - call it with 'X' or 'O'
- * @returns {Object} HumanPlayer object
+ * @returns {Object} Player object
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
  */
-const HumanPlayer = (name, symbol) => {
+const Player = (name, symbol) => {
   /**
    * getName returns the name of the player
    * @returns {string} name
@@ -189,8 +189,18 @@ const HumanPlayer = (name, symbol) => {
 };
 
 /**
- * AIPlayer is a module that contains an AI player object
- * @param {string} symbo - call it with 'X' or 'O'
+ * HumanPlayer is a module that contains a human player object (inherits from Player)
+ * @param {string} name - call it with the player's name
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} HumanPlayer object
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
+ */
+const HumanPlayer = (name, symbol) => ({ ...Player(name, symbol) });
+
+/**
+ * AIPlayer is a module that contains an AI player object (inherits from Player)
+ * @param {string} symbol - call it with 'X' or 'O'
  * @returns {Object} AIPlayer object
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
@@ -200,18 +210,6 @@ const HumanPlayer = (name, symbol) => {
  * @property {function} getNextUnbeatableMove - returns the next move for the AI player (unbeatable mode)
  */
 const AIPlayer = (symbol) => {
-  /**
-   * getName returns the name of the player
-   * @returns {string} name - 'AI'
-   */
-  const getName = () => 'AI';
-
-  /**
-   * getSymbol returns the symbol of the player ('X' or 'O')
-   * @returns {string} symbol
-   */
-  const getSymbol = () => symbol;
-
   /**
    * minimax is a recursive function that evaluates the board and returns a score
    * @param {GameBoard} board - call it with the current board
@@ -370,8 +368,7 @@ const AIPlayer = (symbol) => {
   const getNextUnbeatableMove = (board) => getBestMove(board);
 
   return {
-    getName,
-    getSymbol,
+    ...Player('AI', symbol),
     getNextEasyMove,
     getNextMediumMove,
     getNextHardMove,
