@@ -234,5 +234,17 @@ const AIPlayer = (symbol) => {
     return emptyCells[randomIndex];
   };
 
-  return { getName, getSymbol, getBestMove };
+  // getNextMove returns the next move for the AI
+  const getNextMove = (board, difficultyPercentage) => {
+    // random percentage between 0 and 100
+    const randomPercentage = Math.floor(Math.random() * 101);
+
+    if (randomPercentage < difficultyPercentage) {
+      return getBestMove(board);
+    }
+
+    return getRandomMove(board);
+  };
+
+  return { getName, getSymbol };
 };
