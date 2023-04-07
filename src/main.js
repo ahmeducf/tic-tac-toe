@@ -200,10 +200,16 @@ const HumanPlayer = (name, symbol) => {
  * @property {function} getNextUnbeatableMove - returns the next move for the AI player (unbeatable mode)
  */
 const AIPlayer = (symbol) => {
-  // getName returns the name of the player
+  /**
+   * getName returns the name of the player
+   * @returns {string} name - 'AI'
+   */
   const getName = () => 'AI';
 
-  // getSymbol returns the symbol of the player ('X' or 'O')
+  /**
+   * getSymbol returns the symbol of the player ('X' or 'O')
+   * @returns {string} symbol
+   */
   const getSymbol = () => symbol;
 
   /**
