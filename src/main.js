@@ -1,12 +1,23 @@
-// Cell is a module that contains a board cell
+/**
+ * Cell is a module that contains a cell object
+ * @returns {Object} Cell object
+ * @property {function} getValue - returns the value of the cell
+ * @property {function} setValue - sets the value of the cell to the given value
+ */
 function Cell() {
   // value is the value of the cell (either 'X', 'O', or '_')
   let value = '_';
 
-  // getValue returns the value of the cell
+  /**
+   * getValue returns the value of the cell
+   * @returns {string} value
+   */
   const getValue = () => value;
 
-  // setValue sets the value of the cell to the given value
+  /**
+   * setValue sets the value of the cell to the given value
+   * @param {string} newValue - call it with 'X', 'O', or '_'
+   */
   const setValue = (newValue) => {
     value = newValue;
   };
@@ -14,12 +25,25 @@ function Cell() {
   return { getValue, setValue };
 }
 
-// GameBoard is a module that contains the game board
+/**
+ * GameBoard is a module that contains a game board object
+ * @returns {Object} GameBoard object
+ * @property {function} reset - resets the board to all empty cells
+ * @property {function} getBoard - returns the board
+ * @property {function} getCell - returns the cell at the given coordinates
+ * @property {function} setCell - sets the cell at the given coordinates to the given value
+ * @property {function} isFull - returns true if the board is full, false otherwise
+ * @property {function} getEmptyCells - returns an array of the indices of empty cells
+ * @property {function} checkWin - returns false if no winner, otherwise returns the winner
+ * @property {function} printBoard - prints the board to the console
+ */
 const GameBoard = (() => {
   // board is a 3x3 array of cells
   const board = [3][3];
 
-  // reset resets the board to all empty cells
+  /**
+   * reset resets the board to all empty cells
+   */
   const reset = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -28,18 +52,34 @@ const GameBoard = (() => {
     }
   };
 
-  // getBoard returns the board
+  /**
+   * getBoard returns the board
+   * @returns {Array} board
+   */
   const getBoard = () => board;
 
-  // getCell returns the cell at the given coordinates
+  /**
+   * getCell returns the cell at the given coordinates
+   * @param {number} x - call it with the x coordinate
+   * @param {number} y - call it with the y coordinate
+   * @returns {Object} Cell object
+   */
   const getCell = (x, y) => board[x][y];
 
-  // setCell sets the cell at the given coordinates to the given value
+  /**
+   * setCell sets the cell at the given coordinates to the given value
+   * @param {number} x - call it with the x coordinate
+   * @param {number} y - call it with the y coordinate
+   * @param {string} value - call it with 'X', 'O', or '_'
+   */
   const setCell = (x, y, value) => {
     board[x][y].setValue(value);
   };
 
-  // isFull returns true if the board is full, false otherwise
+  /**
+   * isFull returns true if the board is full, false otherwise
+   * @returns {boolean} isFull
+   */
   const isFull = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -51,7 +91,10 @@ const GameBoard = (() => {
     return true;
   };
 
-  // getEmptyCells returns an array of the indices of empty cells
+  /**
+   * getEmptyCells returns an array of the indices of empty cells
+   * @returns {Array} emptyCells
+   */
   const getEmptyCells = () => {
     const emptyCells = [];
     for (let i = 0; i < 3; i++) {
@@ -64,7 +107,10 @@ const GameBoard = (() => {
     return emptyCells;
   };
 
-  // checkWin returns false if no winner, otherwise returns the winner
+  /**
+   * checkWin returns false if no winner, otherwise returns the winner
+   * @returns {boolean} winner - false if no winner, otherwise returns the winner
+   */
   const checkWin = () => {
     for (let i = 0; i < 3; i++) {
       if (
@@ -95,7 +141,9 @@ const GameBoard = (() => {
     return false;
   };
 
-  // printBoard prints the board to the console
+  /**
+   * printBoard prints the board to the console
+   */
   const printBoard = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -116,18 +164,41 @@ const GameBoard = (() => {
   };
 })();
 
-// HumanPlayer is a module that contains a human player object
+/**
+ * HumanPlayer is a module that contains a human player object
+ * @param {string} name - call it with the player's name
+ * @param {string} symbol - call it with 'X' or 'O'
+ * @returns {Object} HumanPlayer object
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
+ */
 const HumanPlayer = (name, symbol) => {
-  // getName returns the name of the player
+  /**
+   * getName returns the name of the player
+   * @returns {string} name
+   */
   const getName = () => name;
 
-  // getSymbol returns the symbol of the player ('X' or 'O')
+  /**
+   * getSymbol returns the symbol of the player ('X' or 'O')
+   * @returns {string} symbol
+   */
   const getSymbol = () => symbol;
 
   return { getName, getSymbol };
 };
 
-// AIPlayer is a module that contains an AI player object
+/**
+ * AIPlayer is a module that contains an AI player object
+ * @param {string} symbo - call it with 'X' or 'O'
+ * @returns {Object} AIPlayer object
+ * @property {function} getName - returns the name of the player
+ * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
+ * @property {function} getNextEasyMove - returns the next move for the AI player (easy mode)
+ * @property {function} getNextMediumMove - returns the next move for the AI player (medium mode)
+ * @property {function} getNextHardMove - returns the next move for the AI player (hard mode)
+ * @property {function} getNextUnbeatableMove - returns the next move for the AI player (unbeatable mode)
+ */
 const AIPlayer = (symbol) => {
   // getName returns the name of the player
   const getName = () => 'AI';
@@ -135,7 +206,12 @@ const AIPlayer = (symbol) => {
   // getSymbol returns the symbol of the player ('X' or 'O')
   const getSymbol = () => symbol;
 
-  // minimax is a recursive function that returns the best score for the given board
+  /**
+   * minimax is a recursive function that evaluates the board and returns a score
+   * @param {GameBoard} board - call it with the current board
+   * @param {boolean} isMaximizing - call it with true if the current move is maximizing
+   * @returns {number} score
+   */
   const minimax = (board, isMaximizing) => {
     // evaluate the board
     const winner = board.checkWin();
@@ -198,7 +274,11 @@ const AIPlayer = (symbol) => {
     return bestScore;
   };
 
-  // getBestMove returns the best next move for the AI
+  /**
+   * getBestMove returns the best next move for the AI
+   * @param {gameboa} board - call it with the current board
+   * @returns {Array} bestMove
+   */
   const getBestMove = (board) => {
     const emptyCells = board.getEmptyCells();
     let bestScore = -Infinity;
@@ -226,7 +306,11 @@ const AIPlayer = (symbol) => {
     return bestMove;
   };
 
-  // getRandomMove returns a random next move for the AI
+  /**
+   * getRandomMove returns a random next move for the AI
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} randomMove
+   * */
   const getRandomMove = (board) => {
     const emptyCells = board.getEmptyCells();
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
@@ -234,7 +318,12 @@ const AIPlayer = (symbol) => {
     return emptyCells[randomIndex];
   };
 
-  // getNextMove returns the next move for the AI
+  /**
+   * getNextMove returns the next move for the AI
+   * @param {GameBoard} board - call it with the current board
+   * @param {number} difficultyPercentage - call it with the difficulty percentage (0-100)
+   * @returns {Array} nextMove
+   * */
   const getNextMove = (board, difficultyPercentage) => {
     // random percentage between 0 and 100
     const randomPercentage = Math.floor(Math.random() * 101);
@@ -246,16 +335,32 @@ const AIPlayer = (symbol) => {
     return getRandomMove(board);
   };
 
-  // getNextEasyMove returns the next move when the difficulty is easy
+  /**
+   * getNextEasyMove returns the next move when the difficulty is easy
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} nextMove - random move
+   */
   const getNextEasyMove = (board) => getNextMove(board, 0);
 
-  // getNextMediumMove returns the next move when the difficulty is medium
+  /**
+   * getNextMediumMove returns the next move when the difficulty is medium
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} nextMove - the best move with a 50% chance
+   */
   const getNextMediumMove = (board) => getNextMove(board, 50);
 
-  // getNextHardMove returns the next move when the difficulty is hard
+  /**
+   * getNextHardMove returns the next move when the difficulty is hard
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} nextMove - the best move with a 75% chance
+   */
   const getNextHardMove = (board) => getNextMove(board, 75);
 
-  // getNextUnbeatableMove returns the next move when the difficulty is unbeatable
+  /**
+   * getNextUnbeatableMove returns the next move when the difficulty is unbeatable
+   * @param {GameBoard} board - call it with the current board
+   * @returns {Array} nextMove - the best move
+   */
   const getNextUnbeatableMove = (board) => getBestMove(board);
 
   return {
