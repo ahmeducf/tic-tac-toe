@@ -120,6 +120,7 @@ const GameBoard = (() => {
 const HumanPlayer = (name, symbol) => {
   // getName returns the name of the player
   const getName = () => name;
+
   // getSymbol returns the symbol of the player ('X' or 'O')
   const getSymbol = () => symbol;
 
@@ -130,8 +131,100 @@ const HumanPlayer = (name, symbol) => {
 const AIPlayer = (symbol) => {
   // getName returns the name of the player
   const getName = () => 'AI';
+
   // getSymbol returns the symbol of the player ('X' or 'O')
   const getSymbol = () => symbol;
 
-  return { getName, getSymbol };
+  // minimax is a recursive function that returns the best score for the given board
+  const minimax = (board, isMaximizing) => {
+    // evaluate the board
+    const winner = board.checkWin();
+
+    // base case: if the game is won by the maximizing player (AI), return high score (1)
+    if (winner === symbol) {
+      return 1;
+    }
+    // base case: if the game is won by the minimizing player (opponent), return low score (-1)
+    if (winner === 'X' || winner === 'O') {
+      return -1;
+    }
+    // base case: if the game is a tie, return 0
+    if (board.isFull()) {
+      return 0;
+    }
+
+    // recursive case: if the current move is maximizing, return the maximum score
+    if (isMaximizing) {
+      let bestScore = -Infinity;
+      const emptyCells = board.getEmptyCells();
+
+      for (let i = 0; i < emptyCells.length; i++) {
+        const [x, y] = emptyCells[i];
+
+        // make the move
+        board.setCell(x, y, symbol);
+
+        // evaluate the board if the move is made
+        const score = minimax(board, false);
+
+        // undo the move
+        board.setCell(x, y, '_');
+
+        // update the best score
+        bestScore = Math.max(score, bestScore);
+      }
+      return bestScore;
+    }
+
+    // recursive case: if the current move is minimizing, return the minimum score
+    let bestScore = Infinity;
+    const emptyCells = board.getEmptyCells();
+    for (let i = 0; i < emptyCells.length; i++) {
+      const [x, y] = emptyCells[i];
+
+      // make the move
+      board.setCell(x, y, symbol === 'X' ? 'O' : 'X');
+
+      // evaluate the board if the move is made
+      const score = minimax(board, true);
+
+      // undo the move
+      board.setCell(x, y, '_');
+
+      // update the best score
+      bestScore = Math.min(score, bestScore);
+    }
+
+    return bestScore;
+  };
+
+  // getBestMove returns the best next move for the AI
+  const getBestMove = (board) => {
+    const emptyCells = board.getEmptyCells();
+    let bestScore = -Infinity;
+    let bestMove;
+
+    for (let i = 0; i < emptyCells.length; i++) {
+      const [x, y] = emptyCells[i];
+
+      // make the move
+      board.setCell(x, y, symbol);
+
+      // evaluate the board if the move is made
+      const score = minimax(board, false);
+
+      // undo the move
+      board.setCell(x, y, '_');
+
+      // update the best score and move
+      if (score > bestScore) {
+        bestScore = score;
+        bestMove = [x, y];
+      }
+    }
+
+    return bestMove;
+  };
+
+  return { getName, getSymbol, getBestMove };
 };
