@@ -1,6 +1,12 @@
+// Cell is a module that contains a board cell
 function Cell() {
+  // value is the value of the cell (either 'X', 'O', or '_')
   let value = '_';
+
+  // getValue returns the value of the cell
   const getValue = () => value;
+
+  // setValue sets the value of the cell to the given value
   const setValue = (newValue) => {
     value = newValue;
   };
@@ -8,6 +14,7 @@ function Cell() {
   return { getValue, setValue };
 }
 
+// GameBoard is a module that contains the game board
 const GameBoard = (() => {
   // board is a 3x3 array of cells
   const board = [3][3];
