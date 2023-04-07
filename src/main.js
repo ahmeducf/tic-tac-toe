@@ -246,5 +246,24 @@ const AIPlayer = (symbol) => {
     return getRandomMove(board);
   };
 
-  return { getName, getSymbol };
+  // getNextEasyMove returns the next move when the difficulty is easy
+  const getNextEasyMove = (board) => getNextMove(board, 0);
+
+  // getNextMediumMove returns the next move when the difficulty is medium
+  const getNextMediumMove = (board) => getNextMove(board, 50);
+
+  // getNextHardMove returns the next move when the difficulty is hard
+  const getNextHardMove = (board) => getNextMove(board, 75);
+
+  // getNextUnbeatableMove returns the next move when the difficulty is unbeatable
+  const getNextUnbeatableMove = (board) => getBestMove(board);
+
+  return {
+    getName,
+    getSymbol,
+    getNextEasyMove,
+    getNextMediumMove,
+    getNextHardMove,
+    getNextUnbeatableMove,
+  };
 };
