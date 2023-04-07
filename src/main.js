@@ -4,7 +4,7 @@
  * @property {function} getValue - returns the value of the cell
  * @property {function} setValue - sets the value of the cell to the given value
  */
-function Cell() {
+const Cell = () => {
   // value is the value of the cell (either 'X', 'O', or '_')
   let value = '_';
 
@@ -23,7 +23,7 @@ function Cell() {
   };
 
   return { getValue, setValue };
-}
+};
 
 /**
  * GameBoard is a module that contains a game board object
