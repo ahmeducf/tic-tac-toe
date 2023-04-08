@@ -586,4 +586,46 @@ const gameController = (() => {
       playAI();
     }
   };
+
+  const startGame = (firstPlayer, secondPlayer) => {
+    resetGame();
+
+    const player1Symbol = 'X';
+    const player2Symbol = 'O';
+
+    if (firstPlayer.type === 'Easy AI') {
+      setPlayer1(EasyAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Medium AI') {
+      setPlayer1(MediumAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Hard AI') {
+      setPlayer1(HardAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Unbeatable AI') {
+      setPlayer1(UnbeatableAIPlayer(player1Symbol));
+    } else {
+      setPlayer1(HumanPlayer(firstPlayer.name, player1Symbol));
+    }
+
+    if (secondPlayer.type === 'Easy AI') {
+      setPlayer2(EasyAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Medium AI') {
+      setPlayer2(MediumAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Hard AI') {
+      setPlayer2(HardAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Unbeatable AI') {
+      setPlayer2(UnbeatableAIPlayer(player2Symbol));
+    } else {
+      setPlayer2(HumanPlayer(secondPlayer.name, player2Symbol));
+    }
+
+    setCurrentPlayer(player1);
+
+    if (player1.getType() === 'AI' && player2.getType() === 'AI') {
+      while (!gameOver) {
+        playAI();
+        switchCurrentPlayer();
+      }
+    } else if (currentPlayer.getType() === 'AI') {
+      playAI();
+    }
+  };
 })();
