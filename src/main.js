@@ -578,4 +578,12 @@ const gameController = (() => {
       switchCurrentPlayer();
     }
   };
+
+  const restartGame = () => {
+    resetGame();
+    setCurrentPlayer(player1);
+    if (currentPlayer.getType() === 'AI') {
+      playAI();
+    }
+  };
 })();
