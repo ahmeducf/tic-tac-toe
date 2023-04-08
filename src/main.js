@@ -531,4 +531,10 @@ const gameController = (() => {
       setCurrentPlayer(player1);
     }
   };
+
+  const resetGame = () => {
+    gameBoard.reset();
+    setGameOver(false);
+    setWinner(null);
+  };
 })();
