@@ -683,6 +683,7 @@ const gameController = (() => {
   /**
    * startGame starts the game
    * If AI V.S AI, the game begins automatically until game over
+   * If AI V.S Human, the game begins with the first player
    * @param {Object} firstPlayer - call it with Player object e.g. { name: 'Player 1', type: 'Human' }
    * @param {Object} secondPlayer - call it with Player object e.g. { name: 'Player 2', type: 'Easy AI' }
    */
