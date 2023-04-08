@@ -401,20 +401,20 @@ const AIPlayer = (name, symbol) => {
  * @returns {Object} EasyAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of easy (random move)
  */
 const EasyAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Easy AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of easy (random move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 0);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 0);
 
-  return { ...Player('Easy AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -423,20 +423,20 @@ const EasyAIPlayer = (symbol) => {
  * @returns {Object} MediumAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of medium (50% chance of best move)
  */
 const MediumAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Medium AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of medium (50% chance of best move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 50);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 50);
 
-  return { ...Player('Medium AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -445,20 +445,20 @@ const MediumAIPlayer = (symbol) => {
  * @returns {Object} HardAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of hard (75% chance of best move)
  */
 const HardAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Hard AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of hard (75% chance of best move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 75);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 75);
 
-  return { ...Player('Hard AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -467,18 +467,18 @@ const HardAIPlayer = (symbol) => {
  * @returns {Object} UnbeatableAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of unbeatable (best move possible)
  */
 const UnbeatableAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Unbeatable AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of unbeatable (best move possible)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    * */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 100);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 100);
 
-  return { ...Player('Unbeatable AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
