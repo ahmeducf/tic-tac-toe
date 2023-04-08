@@ -628,4 +628,19 @@ const gameController = (() => {
       playAI();
     }
   };
+
+  return {
+    getGameBoard,
+    getPlayer1,
+    getPlayer2,
+    getCurrentPlayer,
+    getWinner,
+    checkDraw,
+    isGameOver,
+    playRound,
+    playAI,
+    switchCurrentPlayer,
+    startGame,
+    restartGame,
+  };
 })();
