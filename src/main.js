@@ -523,4 +523,12 @@ const gameController = (() => {
   };
 
   const checkDraw = () => gameBoard.checkDraw();
+
+  const switchCurrentPlayer = () => {
+    if (currentPlayer === player1) {
+      setCurrentPlayer(player2);
+    } else {
+      setCurrentPlayer(player1);
+    }
+  };
 })();
