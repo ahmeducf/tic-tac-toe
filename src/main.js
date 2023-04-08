@@ -565,4 +565,17 @@ const gameController = (() => {
     const nextMove = currentPlayer.getNextMove(gameBoard);
     play(nextMove);
   };
+
+  const playRound = (cell) => {
+    if (gameOver) {
+      return;
+    }
+
+    play(cell);
+    switchCurrentPlayer();
+    if (currentPlayer.getType() === 'AI') {
+      playAI();
+      switchCurrentPlayer();
+    }
+  };
 })();
