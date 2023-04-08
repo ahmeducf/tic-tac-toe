@@ -254,24 +254,27 @@ const HumanPlayer = (name, symbol) => ({
 const AIPlayer = (name, symbol) => {
   /**
    * minimax is a recursive function that evaluates the board and returns a score
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board
    * @param {boolean} isMaximizing - call it with true if the current move is maximizing
+   * @param {number} depth - call it with the current depth
    * @returns {number} score
    */
-  const minimax = (board, isMaximizing) => {
+  const minimax = (board, isMaximizing, depth) => {
+    const opponentSymbol = symbol === 'X' ? 'O' : 'X';
+
     // evaluate the board
     const winner = board.checkWin();
 
     // base case: if the game is won by the maximizing player (AI), return high score (1)
     if (winner === symbol) {
-      return 1;
+      return 100 - depth;
     }
     // base case: if the game is won by the minimizing player (opponent), return low score (-1)
-    if (winner === 'X' || winner === 'O') {
-      return -1;
+    if (winner === opponentSymbol) {
+      return -100 + depth;
     }
     // base case: if the game is a tie, return 0
-    if (board.isFull()) {
+    if (board.checkDraw()) {
       return 0;
     }
 
@@ -287,10 +290,10 @@ const AIPlayer = (name, symbol) => {
         board.setCell(x, y, symbol);
 
         // evaluate the board if the move is made
-        const score = minimax(board, false);
+        const score = minimax(board, false, depth + 1);
 
         // undo the move
-        board.setCell(x, y, '_');
+        board.resetCell(x, y);
 
         // update the best score
         bestScore = Math.max(score, bestScore);
@@ -308,10 +311,10 @@ const AIPlayer = (name, symbol) => {
       board.setCell(x, y, symbol === 'X' ? 'O' : 'X');
 
       // evaluate the board if the move is made
-      const score = minimax(board, true);
+      const score = minimax(board, true, depth + 1);
 
       // undo the move
-      board.setCell(x, y, '_');
+      board.resetCell(x, y);
 
       // update the best score
       bestScore = Math.min(score, bestScore);
@@ -321,14 +324,22 @@ const AIPlayer = (name, symbol) => {
   };
 
   /**
-   * getBestMove returns the best next move for the AI
-   * @param {gameboa} board - call it with the current board
+   * getBestMove returns the best next move for the AI,
+   * returns null if board is full
+   * @param {gameBoard} board - call it with the current board
    * @returns {Array} bestMove
    */
   const getBestMove = (board) => {
     const emptyCells = board.getEmptyCells();
     let bestScore = -Infinity;
     let bestMove;
+
+    if (emptyCells.length === 0) {
+      return null;
+    }
+    if (emptyCells.length === 1) {
+      return emptyCells[0];
+    }
 
     for (let i = 0; i < emptyCells.length; i++) {
       const [x, y] = emptyCells[i];
@@ -337,10 +348,10 @@ const AIPlayer = (name, symbol) => {
       board.setCell(x, y, symbol);
 
       // evaluate the board if the move is made
-      const score = minimax(board, false);
+      const score = minimax(board, false, 1);
 
       // undo the move
-      board.setCell(x, y, '_');
+      board.resetCell(x, y);
 
       // update the best score and move
       if (score > bestScore) {
