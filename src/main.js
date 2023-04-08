@@ -556,4 +556,13 @@ const gameController = (() => {
       }
     }
   };
+
+  const playAI = () => {
+    if (gameOver) {
+      return;
+    }
+
+    const nextMove = currentPlayer.getNextMove(gameBoard);
+    play(nextMove);
+  };
 })();
