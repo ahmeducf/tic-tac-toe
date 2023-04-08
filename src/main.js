@@ -506,40 +506,99 @@ const gameController = (() => {
   let gameOver = false;
   let winner = null;
 
+  /**
+   * getGameBoard returns the game board
+   * @returns {gameBoard} gameBoard
+   */
   const getGameBoard = () => gameBoard;
 
+  /**
+   * getPlayer1 returns player 1 (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   * @returns {Object} (HumanPlayer, EasyAIPlayer, MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   */
   const getPlayer1 = () => player1;
 
+  /**
+   * setPlayer1 sets player 1 (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   * @param {Object} player - call it with (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   */
   const setPlayer1 = (player) => {
     player1 = player;
   };
 
+  /**
+   * getPlayer2 returns player 2 (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   * @returns {Object} (HumanPlayer, EasyAIPlayer, MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   */
   const getPlayer2 = () => player2;
 
+  /**
+   * setPlayer2 sets player 2 (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   * @param {Object} player - call it with (HumanPlayer, EasyAIPlayer,
+   * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   */
   const setPlayer2 = (player) => {
     player2 = player;
   };
 
+  /**
+   * getCurrentPlayer returns the current player
+   * @returns {Object} (HumanPlayer, EasyAIPlayer, MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   */
   const getCurrentPlayer = () => currentPlayer;
 
+  /**
+   * setCurrentPlayer sets the current player
+   * @param {Object} player - call it with player 1 or player 2
+   */
   const setCurrentPlayer = (player) => {
     currentPlayer = player;
   };
 
+  /**
+   * isGameOver returns true if the game is over, false otherwise
+   * @returns {boolean} gameOver
+   */
   const isGameOver = () => gameOver;
 
+  /**
+   * setGameOver sets the gameOver variable
+   * @param {boolean} value - call it with true or false
+   */
   const setGameOver = (value) => {
     gameOver = value;
   };
 
+  /**
+   * getWinner returns the winner (null if no winner)
+   * @returns {Object} (HumanPlayer, EasyAIPlayer, MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+   * or null
+   */
   const getWinner = () => winner;
 
+  /**
+   * setWinner sets the winner
+   * @param {Object} player - call it with player 1 or player 2
+   * or null if no winner
+   */
   const setWinner = (player) => {
     winner = player;
   };
 
+  /**
+   * checkDraw returns true if the game is a draw, false otherwise
+   * @returns {boolean} draw
+   */
   const checkDraw = () => gameBoard.checkDraw();
 
+  /**
+   * switchCurrentPlayer switches the current player
+   */
   const switchCurrentPlayer = () => {
     if (currentPlayer === player1) {
       setCurrentPlayer(player2);
@@ -548,12 +607,19 @@ const gameController = (() => {
     }
   };
 
+  /**
+   * resetGame resets the game
+   */
   const resetGame = () => {
     gameBoard.reset();
     setGameOver(false);
     setWinner(null);
   };
 
+  /**
+   * play plays a round of the game
+   * @param {Array} cell - call it with the cell to play (e.g. [0, 0])
+   */
   const play = (cell) => {
     if (!cell || cell[0] < 0 || cell[0] > 2 || cell[1] < 0 || cell[1] > 2) {
       console.error(`Invalid cell: ${cell}`);
@@ -573,6 +639,9 @@ const gameController = (() => {
     }
   };
 
+  /**
+   * playAI plays a round of the game for the AI
+   */
   const playAI = () => {
     if (gameOver) {
       return;
@@ -582,6 +651,11 @@ const gameController = (() => {
     play(nextMove);
   };
 
+  /**
+   * playRound plays a round of the game
+   * If the next player is an AI, it will play for the AI
+   * @param {Array} cell - call it with the cell to play (e.g. [0, 0])
+   */
   const playRound = (cell) => {
     if (gameOver) {
       return;
@@ -595,6 +669,9 @@ const gameController = (() => {
     }
   };
 
+  /**
+   * restartGame restarts the game
+   */
   const restartGame = () => {
     resetGame();
     setCurrentPlayer(player1);
@@ -603,6 +680,12 @@ const gameController = (() => {
     }
   };
 
+  /**
+   * startGame starts the game
+   * If AI V.S AI, the game begins automatically until game over
+   * @param {Object} firstPlayer - call it with Player object e.g. { name: 'Player 1', type: 'Human' }
+   * @param {Object} secondPlayer - call it with Player object e.g. { name: 'Player 2', type: 'Easy AI' }
+   */
   const startGame = (firstPlayer, secondPlayer) => {
     resetGame();
 
@@ -654,8 +737,6 @@ const gameController = (() => {
     checkDraw,
     isGameOver,
     playRound,
-    playAI,
-    switchCurrentPlayer,
     startGame,
     restartGame,
   };
