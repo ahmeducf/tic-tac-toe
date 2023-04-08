@@ -537,4 +537,23 @@ const gameController = (() => {
     setGameOver(false);
     setWinner(null);
   };
+
+  const play = (cell) => {
+    if (!cell || cell[0] < 0 || cell[0] > 2 || cell[1] < 0 || cell[1] > 2) {
+      console.error(`Invalid cell: ${cell}`);
+      return;
+    }
+
+    if (gameOver) {
+      return;
+    }
+    if (gameBoard.setCell(cell[0], cell[1], currentPlayer.getSymbol())) {
+      if (gameBoard.checkWin()) {
+        setWinner(currentPlayer);
+        setGameOver(true);
+      } else if (gameBoard.checkDraw()) {
+        setGameOver(true);
+      }
+    }
+  };
 })();
