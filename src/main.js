@@ -482,3 +482,45 @@ const UnbeatableAIPlayer = (symbol) => {
 
   return { ...aiPlayer, getNextMove };
 };
+
+const gameController = (() => {
+  let player1;
+  let player2;
+  let currentPlayer;
+  let gameOver = false;
+  let winner = null;
+
+  const getGameBoard = () => gameBoard;
+
+  const getPlayer1 = () => player1;
+
+  const setPlayer1 = (player) => {
+    player1 = player;
+  };
+
+  const getPlayer2 = () => player2;
+
+  const setPlayer2 = (player) => {
+    player2 = player;
+  };
+
+  const getCurrentPlayer = () => currentPlayer;
+
+  const setCurrentPlayer = (player) => {
+    currentPlayer = player;
+  };
+
+  const isGameOver = () => gameOver;
+
+  const setGameOver = (value) => {
+    gameOver = value;
+  };
+
+  const getWinner = () => winner;
+
+  const setWinner = (player) => {
+    winner = player;
+  };
+
+  const checkDraw = () => gameBoard.checkDraw();
+})();

@@ -488,7 +488,7 @@ const gameController = (() => {
   let player2;
   let currentPlayer;
   let gameOver = false;
-  let winner;
+  let winner = null;
 
   const getGameBoard = () => gameBoard;
 
@@ -522,6 +522,8 @@ const gameController = (() => {
     winner = player;
   };
 
+  const checkDraw = () => gameBoard.checkDraw();
+
   const switchCurrentPlayer = () => {
     if (currentPlayer === player1) {
       setCurrentPlayer(player2);
@@ -534,7 +536,6 @@ const gameController = (() => {
     gameBoard.reset();
     setGameOver(false);
     setWinner(null);
-    setCurrentPlayer(player1);
   };
 
   const play = (cell) => {
@@ -580,6 +581,7 @@ const gameController = (() => {
 
   const restartGame = () => {
     resetGame();
+    setCurrentPlayer(player1);
     if (currentPlayer.getType() === 'AI') {
       playAI();
     }
@@ -632,13 +634,14 @@ const gameController = (() => {
     getPlayer1,
     getPlayer2,
     getCurrentPlayer,
-    isGameOver,
     getWinner,
+    checkDraw,
+    isGameOver,
     playRound,
-    restartGame,
-    startGame,
     playAI,
     switchCurrentPlayer,
+    startGame,
+    restartGame,
   };
 })();
 
