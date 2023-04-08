@@ -483,6 +483,22 @@ const UnbeatableAIPlayer = (symbol) => {
   return { ...aiPlayer, getNextMove };
 };
 
+/**
+ * gameController is a module that contains the logic for the game
+ * @returns {Object} gameController
+ * @property {function} getGameBoard - returns the game board
+ * @property {function} getPlayer1 - returns player 1 (HumanPlayer, EasyAIPlayer,
+ *  MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+ * @property {function} getPlayer2 - returns player 2 (HumanPlayer, EasyAIPlayer,
+ * MediumAIPlayer, HardAIPlayer, UnbeatableAIPlayer)
+ * @property {function} getCurrentPlayer - returns the current player
+ * @property {function} isGameOver - returns true if the game is over, false otherwise
+ * @property {function} getWinner - returns the winner (null if no winner)
+ * @property {function} checkDraw - returns true if the game is a draw, false otherwise
+ * @property {function} playRound - plays a round of the game
+ * @property {function} startGame - starts the game
+ * @property {function} restartGame - restarts the game
+ */
 const gameController = (() => {
   let player1;
   let player2;
