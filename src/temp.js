@@ -32,7 +32,7 @@ const Cell = () => {
  * @property {function} getBoard - returns the board
  * @property {function} getCell - returns the cell at the given coordinates
  * @property {function} setCell - sets the cell at the given coordinates to the given value
- * @property {function} resetCell - resets the cell at the given coordinates
+ * @property {function} resetCell -
  * @property {function} isFull - returns true if the board is full, false otherwise
  * @property {function} getEmptyCells - returns an array of the indices of empty cells
  * @property {function} checkWin - returns false if no winner, otherwise returns the winner
@@ -91,7 +91,7 @@ const gameBoard = (() => {
   };
 
   /**
-   * resetCell resets the cell at the given coordinates
+   * resetCell
    * @param {number} x - call it with the x coordinate
    * @param {number} y  - call it with the y coordinate
    */
@@ -254,24 +254,27 @@ const HumanPlayer = (name, symbol) => ({
 const AIPlayer = (name, symbol) => {
   /**
    * minimax is a recursive function that evaluates the board and returns a score
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board
    * @param {boolean} isMaximizing - call it with true if the current move is maximizing
+   * @param {number} depth - call it with the current depth
    * @returns {number} score
    */
-  const minimax = (board, isMaximizing) => {
+  const minimax = (board, isMaximizing, depth) => {
+    const opponentSymbol = symbol === 'X' ? 'O' : 'X';
+
     // evaluate the board
     const winner = board.checkWin();
 
     // base case: if the game is won by the maximizing player (AI), return high score (1)
     if (winner === symbol) {
-      return 1;
+      return 100 - depth;
     }
     // base case: if the game is won by the minimizing player (opponent), return low score (-1)
-    if (winner === 'X' || winner === 'O') {
-      return -1;
+    if (winner === opponentSymbol) {
+      return -100 + depth;
     }
     // base case: if the game is a tie, return 0
-    if (board.isFull()) {
+    if (board.checkDraw()) {
       return 0;
     }
 
@@ -287,10 +290,10 @@ const AIPlayer = (name, symbol) => {
         board.setCell(x, y, symbol);
 
         // evaluate the board if the move is made
-        const score = minimax(board, false);
+        const score = minimax(board, false, depth + 1);
 
         // undo the move
-        board.setCell(x, y, '_');
+        board.resetCell(x, y);
 
         // update the best score
         bestScore = Math.max(score, bestScore);
@@ -308,10 +311,10 @@ const AIPlayer = (name, symbol) => {
       board.setCell(x, y, symbol === 'X' ? 'O' : 'X');
 
       // evaluate the board if the move is made
-      const score = minimax(board, true);
+      const score = minimax(board, true, depth + 1);
 
       // undo the move
-      board.setCell(x, y, '_');
+      board.resetCell(x, y);
 
       // update the best score
       bestScore = Math.min(score, bestScore);
@@ -321,14 +324,22 @@ const AIPlayer = (name, symbol) => {
   };
 
   /**
-   * getBestMove returns the best next move for the AI
-   * @param {gameboa} board - call it with the current board
+   * getBestMove returns the best next move for the AI,
+   * returns null if board is full
+   * @param {gameBoard} board - call it with the current board
    * @returns {Array} bestMove
    */
   const getBestMove = (board) => {
     const emptyCells = board.getEmptyCells();
     let bestScore = -Infinity;
     let bestMove;
+
+    if (emptyCells.length === 0) {
+      return null;
+    }
+    if (emptyCells.length === 1) {
+      return emptyCells[0];
+    }
 
     for (let i = 0; i < emptyCells.length; i++) {
       const [x, y] = emptyCells[i];
@@ -337,10 +348,10 @@ const AIPlayer = (name, symbol) => {
       board.setCell(x, y, symbol);
 
       // evaluate the board if the move is made
-      const score = minimax(board, false);
+      const score = minimax(board, false, 1);
 
       // undo the move
-      board.setCell(x, y, '_');
+      board.resetCell(x, y);
 
       // update the best score and move
       if (score > bestScore) {
@@ -390,20 +401,20 @@ const AIPlayer = (name, symbol) => {
  * @returns {Object} EasyAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of easy (random move)
  */
 const EasyAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Easy AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of easy (random move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 0);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 0);
 
-  return { ...Player('Easy AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -412,20 +423,20 @@ const EasyAIPlayer = (symbol) => {
  * @returns {Object} MediumAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of medium (50% chance of best move)
  */
 const MediumAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Medium AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of medium (50% chance of best move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 50);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 50);
 
-  return { ...Player('Medium AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -434,20 +445,20 @@ const MediumAIPlayer = (symbol) => {
  * @returns {Object} HardAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of hard (75% chance of best move)
  */
 const HardAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Hard AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of hard (75% chance of best move)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 75);
-  };
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 75);
 
-  return { ...Player('Hard AI', symbol), getNextMove };
+  return { ...aiPlayer, getNextMove };
 };
 
 /**
@@ -456,18 +467,179 @@ const HardAIPlayer = (symbol) => {
  * @returns {Object} UnbeatableAIPlayer
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
+ * @property {function} getType - returns the type of the player (always 'AI')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of unbeatable (best move possible)
  */
 const UnbeatableAIPlayer = (symbol) => {
+  const aiPlayer = AIPlayer('Unbeatable AI', symbol);
+
   /**
    * getNextMove returns the next move for the AI with a difficulty of unbeatable (best move possible)
-   * @param {GameBoard} board - call it with the current board
+   * @param {gameBoard} board - call it with the current board object
    * @returns {Array} nextMove
    * */
-  const getNextMove = (board) => {
-    const aiPlayer = AIPlayer(symbol);
-    aiPlayer.getNextMove(board, 100);
+  const getNextMove = (board) => aiPlayer.getNextMove(board, 100);
+
+  return { ...aiPlayer, getNextMove };
+};
+
+const gameController = (() => {
+  let player1;
+  let player2;
+  let currentPlayer;
+  let gameOver = false;
+  let winner;
+
+  const getGameBoard = () => gameBoard;
+
+  const getPlayer1 = () => player1;
+
+  const setPlayer1 = (player) => {
+    player1 = player;
   };
 
-  return { ...Player('Unbeatable AI', symbol), getNextMove };
-};
+  const getPlayer2 = () => player2;
+
+  const setPlayer2 = (player) => {
+    player2 = player;
+  };
+
+  const getCurrentPlayer = () => currentPlayer;
+
+  const setCurrentPlayer = (player) => {
+    currentPlayer = player;
+  };
+
+  const isGameOver = () => gameOver;
+
+  const setGameOver = (value) => {
+    gameOver = value;
+  };
+
+  const getWinner = () => winner;
+
+  const setWinner = (player) => {
+    winner = player;
+  };
+
+  const switchCurrentPlayer = () => {
+    if (currentPlayer === player1) {
+      setCurrentPlayer(player2);
+    } else {
+      setCurrentPlayer(player1);
+    }
+  };
+
+  const resetGame = () => {
+    gameBoard.reset();
+    setGameOver(false);
+    setWinner(null);
+    setCurrentPlayer(player1);
+  };
+
+  const play = (cell) => {
+    if (!cell || cell[0] < 0 || cell[0] > 2 || cell[1] < 0 || cell[1] > 2) {
+      console.error(`Invalid cell: ${cell}`);
+      return;
+    }
+
+    if (gameOver) {
+      return;
+    }
+    if (gameBoard.setCell(cell[0], cell[1], currentPlayer.getSymbol())) {
+      if (gameBoard.checkWin()) {
+        setWinner(currentPlayer);
+        setGameOver(true);
+      } else if (gameBoard.checkDraw()) {
+        setGameOver(true);
+      }
+    }
+  };
+
+  const playAI = () => {
+    if (gameOver) {
+      return;
+    }
+
+    const nextMove = currentPlayer.getNextMove(gameBoard);
+    play(nextMove);
+  };
+
+  const playRound = (cell) => {
+    if (gameOver) {
+      return;
+    }
+
+    play(cell);
+    switchCurrentPlayer();
+    if (currentPlayer.getType() === 'AI') {
+      playAI();
+      switchCurrentPlayer();
+    }
+  };
+
+  const restartGame = () => {
+    resetGame();
+    if (currentPlayer.getType() === 'AI') {
+      playAI();
+    }
+  };
+
+  const startGame = (firstPlayer, secondPlayer) => {
+    resetGame();
+
+    const player1Symbol = 'X';
+    const player2Symbol = 'O';
+
+    if (firstPlayer.type === 'Easy AI') {
+      setPlayer1(EasyAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Medium AI') {
+      setPlayer1(MediumAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Hard AI') {
+      setPlayer1(HardAIPlayer(player1Symbol));
+    } else if (firstPlayer.type === 'Unbeatable AI') {
+      setPlayer1(UnbeatableAIPlayer(player1Symbol));
+    } else {
+      setPlayer1(HumanPlayer(firstPlayer.name, player1Symbol));
+    }
+
+    if (secondPlayer.type === 'Easy AI') {
+      setPlayer2(EasyAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Medium AI') {
+      setPlayer2(MediumAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Hard AI') {
+      setPlayer2(HardAIPlayer(player2Symbol));
+    } else if (secondPlayer.type === 'Unbeatable AI') {
+      setPlayer2(UnbeatableAIPlayer(player2Symbol));
+    } else {
+      setPlayer2(HumanPlayer(secondPlayer.name, player2Symbol));
+    }
+
+    setCurrentPlayer(player1);
+
+    if (player1.getType() === 'AI' && player2.getType() === 'AI') {
+      while (!gameOver) {
+        playAI();
+        switchCurrentPlayer();
+      }
+    } else if (currentPlayer.getType() === 'AI') {
+      playAI();
+    }
+  };
+
+  return {
+    getGameBoard,
+    getPlayer1,
+    getPlayer2,
+    getCurrentPlayer,
+    isGameOver,
+    getWinner,
+    playRound,
+    restartGame,
+    startGame,
+    playAI,
+    switchCurrentPlayer,
+  };
+})();
+
+gameController.startGame({ type: 'Unbeatable AI' }, { type: 'Unbeatable AI' });
