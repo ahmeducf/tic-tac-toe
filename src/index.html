@@ -48,6 +48,11 @@
             </div>
             <div class="player__icon">
               <img src="./assets/player-human.svg" alt="Human Player" />
+              <img
+                class="disabled"
+                src="./assets/player-ai.svg"
+                alt="AI Player"
+              />
             </div>
             <div class="player__type-selector">
               <input
@@ -58,8 +63,8 @@
                 checked
               />
               <label for="player1-human">Human</label>
-              <input type="radio" name="player1" id="player1-AI" value="AI" />
-              <label for="player1-AI">AI</label>
+              <input type="radio" name="player1" id="player1-ai" value="AI" />
+              <label for="player1-ai">AI</label>
             </div>
             <div class="player__name">
               <input type="text" id="player1-name" placeholder="Player 1" />
@@ -72,6 +77,11 @@
               <img src="./assets/icon-o-gray.svg" alt="O" />
             </div>
             <div class="player__icon">
+              <img
+                class="disabled"
+                src="./assets/player-human.svg"
+                alt="Human Player"
+              />
               <img src="./assets/player-ai.svg" alt="AI Player" />
             </div>
             <div class="player__type-selector">
@@ -85,11 +95,11 @@
               <input
                 type="radio"
                 name="player2"
-                id="player2-AI"
+                id="player2-ai"
                 value="AI"
                 checked
               />
-              <label for="player-AI">AI</label>
+              <label for="player-ai">AI</label>
             </div>
             <div class="player__ai-type">
               <select name="player2__ai-type" id="ai-type">
@@ -98,6 +108,7 @@
                 <option value="hard">Hard</option>
                 <option value="unbeatable">Unbeatable</option>
               </select>
+              <!-- <label for="ai-type">AI Type</label> -->
             </div>
           </div>
 

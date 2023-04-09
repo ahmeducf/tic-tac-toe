@@ -44,6 +44,11 @@ html {
   vertical-align: baseline;
 }
 
+/* Used to hide elements via JavaScript */
+.disabled {
+  display: none;
+}
+
 /* Game-Initializer */
 
 .game-initializer {
