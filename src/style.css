@@ -24,36 +24,35 @@ html {
   color: var(--white);
 }
 
-/* CSS Reset */
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  /* CSS Reset */
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-/* Disable user selection */
-textarea,
-input,
-select,
-a {
+  /* Disable text selection */
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* Catch errors */
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
 }
 
-/* Game Initializer */
+/* Game-Initializer */
 
 .game-initializer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
 }
+
+/* Game-Initializer Header */
 
 .game-initializer header {
   width: 85%;
@@ -67,23 +66,30 @@ a {
   width: 70%;
 }
 
+/* Game-Initializer Options */
+
 .game-initializer__options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(300px, 500px));
   grid-gap: 20px;
   justify-items: center;
+  justify-content: center;
+  align-content: center;
 }
+
+/* Game Initializer Player */
 
 .game-initializer__options .player {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
   border: 1px solid var(--secondary);
   border-radius: 5px;
   padding-bottom: 20px;
 }
+
+/* Options Player Symbol */
 
 .player .player__symbol {
   width: 100%;
@@ -96,6 +102,72 @@ a {
 .player__symbol img {
   width: 40px;
 }
+
+/* Options Player Icon */
+
+.player .player__icon {
+  margin-top: 10px;
+}
+
+/* Options Player Type-Selector */
+
+.player__type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  justify-items: center;
+  align-items: center;
+  width: 60%;
+  height: 50px;
+  border-radius: 5px;
+  background: var(--secondary);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.player__type-selector input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+.player__type-selector input[type='radio']:first-of-type {
+  left: 0;
+}
+
+.player__type-selector input[type='radio']:last-of-type {
+  right: 0;
+}
+
+label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--grey);
+  cursor: pointer;
+  font-style: italic;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.player__type-selector input[type='radio']:checked + label {
+  background-color: var(--grey);
+  color: var(--primary);
+}
+
+/* Options Start-Game */
 
 .game-initializer__start {
   grid-column: 1 / -1;
