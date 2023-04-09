@@ -11,6 +11,7 @@
   --grey: #a9bec8;
   --dark-cyan: #34c3be;
   --lighten-yellow: #f2b138;
+  --white: #fffbfb;
 }
 
 /* Global styles */
@@ -18,6 +19,9 @@ html {
   box-sizing: border-box;
   font-family: 'Outfit', system-ui, 'Segoe UI', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  min-height: 100vh;
+  background-color: var(--primary);
+  color: var(--white);
 }
 
 /* CSS Reset */
@@ -40,4 +44,79 @@ a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+/* Game Initializer */
+
+.game-initializer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.game-initializer header {
+  width: 85%;
+  height: 100px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.game-initializer main {
+  width: 70%;
+}
+
+.game-initializer__options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.game-initializer__options .player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--secondary);
+  border-radius: 5px;
+  padding-bottom: 20px;
+}
+
+.player .player__symbol {
+  width: 100%;
+  background-color: var(--secondary);
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.player__symbol img {
+  width: 40px;
+}
+
+.game-initializer__start {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.start-game-btn {
+  width: 35%;
+  height: 64px;
+  padding-bottom: 5px;
+  background-color: var(--lighten-yellow);
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: inset 0 -3px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
