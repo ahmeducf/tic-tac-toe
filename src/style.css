@@ -303,7 +303,8 @@ button {
   color: var(--dark-cyan);
 }
 
-.result-modal__message img {
+.result-modal__winner-symbol {
+  background: url(./assets/icon-x.svg) no-repeat center / 100%;
   width: 45px;
   height: 45px;
 }
