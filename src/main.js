@@ -399,7 +399,7 @@ const AIPlayer = (name, symbol, level) => {
     return getRandomMove(board);
   };
 
-  return { getNextMove, ...Player(name, symbol, 'AI') };
+  return { getLevel, getNextMove, ...Player(name, symbol, 'AI') };
 };
 
 /**
