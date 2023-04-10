@@ -252,7 +252,9 @@ const HumanPlayer = (name, symbol) => ({
  * @property {function} getType - returns the type of the player ('Human' or 'AI')
  * @property {function} getLevel - returns the difficulty level of the AI ('Easy', 'Medium', 'Hard', 'Unbeatable')
  */
-const AIPlayer = (name, symbol, level) => {
+const AIPlayer = (symbol, level) => {
+  const name = `${level} AI`;
+
   /**
    * level is the difficulty level of the AI
    * (Easy, Medium, Hard, Unbeatable)
@@ -413,7 +415,7 @@ const AIPlayer = (name, symbol, level) => {
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of easy (random move)
  */
 const EasyAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Easy AI', symbol, 'Easy');
+  const aiPlayer = AIPlayer(symbol, 'Easy');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of easy (random move)
@@ -436,7 +438,7 @@ const EasyAIPlayer = (symbol) => {
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of medium (50% chance of best move)
  */
 const MediumAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Medium AI', symbol, 'Medium');
+  const aiPlayer = AIPlayer(symbol, 'Medium');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of medium (50% chance of best move)
@@ -459,7 +461,7 @@ const MediumAIPlayer = (symbol) => {
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of hard (75% chance of best move)
  */
 const HardAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Hard AI', symbol, 'Hard');
+  const aiPlayer = AIPlayer(symbol, 'Hard');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of hard (75% chance of best move)
@@ -482,7 +484,7 @@ const HardAIPlayer = (symbol) => {
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of unbeatable (best move possible)
  */
 const UnbeatableAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Unbeatable AI', symbol, 'Unbeatable');
+  const aiPlayer = AIPlayer(symbol, 'Unbeatable');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of unbeatable (best move possible)
