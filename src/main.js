@@ -250,8 +250,15 @@ const HumanPlayer = (name, symbol) => ({
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player ('X' or 'O')
  * @property {function} getType - returns the type of the player ('Human' or 'AI')
+ * @property {function} getLevel - returns the difficulty level of the AI ('Easy', 'Medium', 'Hard', 'Unbeatable')
  */
-const AIPlayer = (name, symbol) => {
+const AIPlayer = (name, symbol, level) => {
+  /**
+   * level is the difficulty level of the AI
+   * (Easy, Medium, Hard, Unbeatable)
+   */
+  const getLevel = () => level;
+
   /**
    * minimax is a recursive function that evaluates the board and returns a score
    * @param {gameBoard} board - call it with the current board
@@ -402,10 +409,11 @@ const AIPlayer = (name, symbol) => {
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
  * @property {function} getType - returns the type of the player (always 'AI')
+ * @property {function} getLevel - returns the level of the AI (always 'Easy')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of easy (random move)
  */
 const EasyAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Easy AI', symbol);
+  const aiPlayer = AIPlayer('Easy AI', symbol, 'Easy');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of easy (random move)
@@ -424,10 +432,11 @@ const EasyAIPlayer = (symbol) => {
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
  * @property {function} getType - returns the type of the player (always 'AI')
+ * @property {function} getLevel - returns the level of the AI (always 'Medium')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of medium (50% chance of best move)
  */
 const MediumAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Medium AI', symbol);
+  const aiPlayer = AIPlayer('Medium AI', symbol, 'Medium');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of medium (50% chance of best move)
@@ -446,10 +455,11 @@ const MediumAIPlayer = (symbol) => {
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
  * @property {function} getType - returns the type of the player (always 'AI')
+ * @property {function} getLevel - returns the level of the AI (always 'Hard')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of hard (75% chance of best move)
  */
 const HardAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Hard AI', symbol);
+  const aiPlayer = AIPlayer('Hard AI', symbol, 'Hard');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of hard (75% chance of best move)
@@ -468,10 +478,11 @@ const HardAIPlayer = (symbol) => {
  * @property {function} getName - returns the name of the player
  * @property {function} getSymbol - returns the symbol of the player
  * @property {function} getType - returns the type of the player (always 'AI')
+ * @property {function} getLevel - returns the level of the AI (always 'Unbeatable')
  * @property {function} getNextMove - returns the next move for the AI with a difficulty of unbeatable (best move possible)
  */
 const UnbeatableAIPlayer = (symbol) => {
-  const aiPlayer = AIPlayer('Unbeatable AI', symbol);
+  const aiPlayer = AIPlayer('Unbeatable AI', symbol, 'Unbeatable');
 
   /**
    * getNextMove returns the next move for the AI with a difficulty of unbeatable (best move possible)
@@ -693,25 +704,31 @@ const gameController = (() => {
     const player1Symbol = 'X';
     const player2Symbol = 'O';
 
-    if (firstPlayer.type === 'Easy AI') {
+    if (firstPlayer.type === 'AI' && firstPlayer.level === 'Easy') {
       setPlayer1(EasyAIPlayer(player1Symbol));
-    } else if (firstPlayer.type === 'Medium AI') {
+    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'Medium') {
       setPlayer1(MediumAIPlayer(player1Symbol));
-    } else if (firstPlayer.type === 'Hard AI') {
+    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'Hard') {
       setPlayer1(HardAIPlayer(player1Symbol));
-    } else if (firstPlayer.type === 'Unbeatable AI') {
+    } else if (
+      firstPlayer.type === 'AI' &&
+      firstPlayer.level === 'Unbeatable'
+    ) {
       setPlayer1(UnbeatableAIPlayer(player1Symbol));
     } else {
       setPlayer1(HumanPlayer(firstPlayer.name, player1Symbol));
     }
 
-    if (secondPlayer.type === 'Easy AI') {
+    if (secondPlayer.type === 'AI' && secondPlayer.level === 'Easy') {
       setPlayer2(EasyAIPlayer(player2Symbol));
-    } else if (secondPlayer.type === 'Medium AI') {
+    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'Medium') {
       setPlayer2(MediumAIPlayer(player2Symbol));
-    } else if (secondPlayer.type === 'Hard AI') {
+    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'Hard') {
       setPlayer2(HardAIPlayer(player2Symbol));
-    } else if (secondPlayer.type === 'Unbeatable AI') {
+    } else if (
+      secondPlayer.type === 'AI' &&
+      secondPlayer.level === 'Unbeatable'
+    ) {
       setPlayer2(UnbeatableAIPlayer(player2Symbol));
     } else {
       setPlayer2(HumanPlayer(secondPlayer.name, player2Symbol));
