@@ -44,11 +44,6 @@ html {
   vertical-align: baseline;
 }
 
-/* Used to hide elements via JavaScript */
-.disabled {
-  display: none;
-}
-
 /* Game-Initializer */
 
 .game-initializer {
@@ -150,7 +145,7 @@ html {
   right: 0;
 }
 
-label {
+.player__type-selector label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,6 +167,52 @@ label {
   color: var(--primary);
 }
 
+/* Options Player Player-Name */
+/* Options Player AI-Type */
+
+.player__name,
+.player__ai-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.player__name input[type='text'],
+.player__ai-type select {
+  width: 60%;
+  height: 40px;
+  padding: 5px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  outline: none;
+  color: var(--primary);
+  background-color: var(--grey);
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.player__name label,
+.player__ai-type label {
+  border: 0;
+  clip-path: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip-path: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.player__name input[type='text']::placeholder {
+  color: var(--primary);
+  opacity: 0.5;
+  text-transform: none;
+  font-weight: 400;
+}
+
 /* Options Start-Game */
 
 .game-initializer__start {
@@ -187,13 +228,18 @@ label {
   height: 64px;
   padding-bottom: 5px;
   background-color: var(--lighten-yellow);
-  color: black;
+  color: var(--primary);
   border: none;
   border-radius: 5px;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: inset 0 -3px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+}
+
+/* Used to hide elements via JavaScript */
+.disabled {
+  display: none;
 }
