@@ -34,7 +34,68 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <section class="game-initializer">
+    <section class="game">
+      <header>
+        <div class="logo">
+          <img src="./assets/logo.svg" alt="Tic Tac Toe" />
+        </div>
+      </header>
+      <div class="game__actions">
+        <button class="game__restart">
+          <img src="./assets/icon-restart.svg" alt="Restart Game" />
+        </button>
+        <button class="game__quit">
+          <img src="./assets/icon-quit.svg" alt="Quit Game" />
+        </button>
+      </div>
+      <div class="game__status">
+        <div class="game__status-player">
+          <div class="game__status-player-symbol">
+            <img src="./assets/icon-x.svg" alt="X" />
+          </div>
+          <div class="game__status-player-name">Player 1</div>
+          <div class="game__status-player-icon">
+            <img src="./assets/player-human.svg" alt="Human Player" />
+          </div>
+        </div>
+
+        <div class="game__status-message">
+          <div class="status-message__turn-icon"></div>
+          <p class="status-message__text">Turn</p>
+        </div>
+
+        <div class="game__status-player">
+          <div class="game__status-player-symbol">
+            <img src="./assets/icon-o.svg" alt="O" />
+          </div>
+          <div class="game__status-player-name">Easy AI</div>
+          <div class="game__status-player-icon">
+            <img src="./assets/player-ai.svg" alt="AI Player" />
+          </div>
+        </div>
+      </div>
+      <main>
+        <div class="game__board">
+          <div class="game__board-row">
+            <div class="game__board-cell" data-cell-index="0"></div>
+            <div class="game__board-cell" data-cell-index="1"></div>
+            <div class="game__board-cell" data-cell-index="2"></div>
+          </div>
+          <div class="game__board-row">
+            <div class="game__board-cell" data-cell-index="3"></div>
+            <div class="game__board-cell" data-cell-index="4"></div>
+            <div class="game__board-cell" data-cell-index="5"></div>
+          </div>
+          <div class="game__board-row">
+            <div class="game__board-cell" data-cell-index="6"></div>
+            <div class="game__board-cell" data-cell-index="7"></div>
+            <div class="game__board-cell" data-cell-index="8"></div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <section class="disabled game-initializer">
       <header>
         <div class="logo">
           <img src="./assets/logo.svg" alt="Tic Tac Toe" />
