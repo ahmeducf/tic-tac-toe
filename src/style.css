@@ -100,9 +100,9 @@ button {
   color: var(--grey);
   width: 60%;
   border: 1px solid var(--secondary);
-  /* border-radius: 5px; */
-  /* padding: 20px; */
 }
+
+/* Game Status Player */
 
 .game__status-player {
   display: flex;
@@ -139,6 +139,8 @@ button {
   width: 80px;
   height: 80px;
 }
+
+/* Game Status Message */
 
 .game__status-message {
   display: flex;
