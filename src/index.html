@@ -110,22 +110,22 @@
             </div>
             <div class="player__icon">
               <img src="./assets/player-human.svg" alt="Human Player" />
-              <img
-                class="disabled"
-                src="./assets/player-ai.svg"
-                alt="AI Player"
-              />
             </div>
             <div class="player__type-selector">
               <input
                 type="radio"
-                name="player1"
+                name="player1-type"
                 id="player1-human"
                 value="human"
                 checked
               />
               <label for="player1-human">Human</label>
-              <input type="radio" name="player1" id="player1-ai" value="AI" />
+              <input
+                type="radio"
+                name="player1-type"
+                id="player1-ai"
+                value="AI"
+              />
               <label for="player1-ai">AI</label>
             </div>
             <div class="player__name">
@@ -136,9 +136,9 @@
                 placeholder="Enter player name ..."
               />
             </div>
-            <div class="disabled player1__ai-type">
+            <div class="disabled player__ai-type">
               <label for="ai1-type">AI Type</label>
-              <select name="player1__ai-type" id="ai1-type">
+              <select name="player__ai-type" id="ai1-type">
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
@@ -152,29 +152,24 @@
               <img src="./assets/icon-o-gray.svg" alt="O" />
             </div>
             <div class="player__icon">
-              <img
-                class="disabled"
-                src="./assets/player-human.svg"
-                alt="Human Player"
-              />
               <img src="./assets/player-ai.svg" alt="AI Player" />
             </div>
             <div class="player__type-selector">
               <input
                 type="radio"
-                name="player2"
+                name="player2-type"
                 id="player2-human"
                 value="Human"
               />
-              <label for="player-human">Human</label>
+              <label for="player2-human">Human</label>
               <input
                 type="radio"
-                name="player2"
+                name="player2-type"
                 id="player2-ai"
                 value="AI"
                 checked
               />
-              <label for="player-ai">AI</label>
+              <label for="player2-ai">AI</label>
             </div>
             <div class="disabled player__name">
               <label for="player2-name">Player Name</label>
@@ -186,7 +181,7 @@
             </div>
             <div class="player__ai-type">
               <label for="ai2-type">AI Type</label>
-              <select name="player2__ai-type" id="ai2-type">
+              <select name="player__ai-type" id="ai2-type">
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>

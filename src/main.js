@@ -763,6 +763,67 @@ const gameController = (() => {
 })();
 
 const displayController = (() => {
+  // Player 1
+  const player1TypeRadios = document.querySelectorAll(
+    'input[name="player1-type"]'
+  );
+  const player1IconImg = document.querySelector(
+    '.player:nth-of-type(1) .player__icon img'
+  );
+  const player1NameDiv = document.querySelector(
+    '.player:nth-of-type(1) .player__name'
+  );
+  const player1AITypeDiv = document.querySelector(
+    '.player:nth-of-type(1) .player__ai-type'
+  );
+
+  // Player 2
+  const player2TypeRadios = document.querySelectorAll(
+    'input[name="player2-type"]'
+  );
+  const player2IconImg = document.querySelector(
+    '.player:nth-of-type(2) .player__icon img'
+  );
+  const player2NameDiv = document.querySelector(
+    '.player:nth-of-type(2) .player__name'
+  );
+  const player2AITypeDiv = document.querySelector(
+    '.player:nth-of-type(2) .player__ai-type'
+  );
+
+  const changePlayerIcon = (playerIconImg, playerType) => {
+    if (playerType === 'AI') {
+      playerIconImg.setAttribute('src', './assets/player-ai.svg');
+    } else {
+      playerIconImg.setAttribute('src', './assets/player-human.svg');
+    }
+  };
+
+  const toggleElement = (element) => {
+    element.classList.toggle('disabled');
+  };
+
+  const handlePlayerTypeChange = (
+    playerTypeRadios,
+    playerIconImg,
+    playerNameDiv,
+    playerAITypeDiv
+  ) => {
+    [...playerTypeRadios].forEach((radio) => {
+      radio.addEventListener('change', () => {
+        if (radio.checked) {
+          if (radio.value === 'AI') {
+            changePlayerIcon(playerIconImg, 'AI');
+          } else {
+            changePlayerIcon(playerIconImg, 'Human');
+          }
+          toggleElement(playerNameDiv);
+          toggleElement(playerAITypeDiv);
+        }
+      });
+    });
+  };
+
   const addClickedClass = (element) => {
     element.classList.add('clicked');
     const removeClickedClass = () => {
@@ -770,4 +831,17 @@ const displayController = (() => {
     };
     element.addEventListener('transitionend', removeClickedClass);
   };
+
+  handlePlayerTypeChange(
+    player1TypeRadios,
+    player1IconImg,
+    player1NameDiv,
+    player1AITypeDiv
+  );
+  handlePlayerTypeChange(
+    player2TypeRadios,
+    player2IconImg,
+    player2NameDiv,
+    player2AITypeDiv
+  );
 })();
