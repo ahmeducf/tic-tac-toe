@@ -761,3 +761,13 @@ const gameController = (() => {
     restartGame,
   };
 })();
+
+const displayController = (() => {
+  const addClickedClass = (element) => {
+    element.classList.add('clicked');
+    const removeClickedClass = () => {
+      element.classList.remove('clicked');
+    };
+    element.addEventListener('transitionend', removeClickedClass);
+  };
+})();
