@@ -488,3 +488,9 @@ button {
 .disabled {
   display: none;
 }
+
+.clicked {
+  transform: scale(0.95) translateY(5px);
+  box-shadow: 0 0 0, inset 0 2px 10px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.2);
+}
