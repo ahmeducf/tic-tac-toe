@@ -133,7 +133,7 @@ button {
   align-items: center;
   background-color: var(--secondary);
   padding: 10px;
-  min-width: 120px;
+  min-width: 162px;
 }
 
 .game__status-player-symbol img {
@@ -361,11 +361,19 @@ button {
   width: 1px;
 }
 
+.player__name input[type='text'] {
+  transition: all 0.3s ease;
+}
+
 .player__name input[type='text']::placeholder {
   color: var(--primary);
   opacity: 0.5;
   text-transform: none;
   font-weight: 400;
+}
+
+.player__name input[type='text'].invalid::placeholder {
+  color: var(--white);
 }
 
 /* Options Start-Game */
@@ -493,4 +501,9 @@ button {
   transform: scale(0.95) translateY(5px);
   box-shadow: 0 0 0, inset 0 2px 10px rgba(0, 0, 0, 0.4);
   filter: brightness(1.2);
+}
+
+.invalid {
+  border: 2px solid #b92326 !important;
+  background-color: rgba(185, 35, 38, 0.2) !important;
 }

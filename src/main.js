@@ -698,7 +698,7 @@ const gameController = (() => {
    * If AI V.S AI, the game begins automatically until game over
    * If AI V.S Human, the game begins with the first player
    * @param {Object} firstPlayer - call it with Player object e.g. { name: 'Player 1', type: 'Human' }
-   * @param {Object} secondPlayer - call it with Player object e.g. { name: 'Player 2', type: 'Easy AI' }
+   * @param {Object} secondPlayer - call it with Player object e.g. { type: 'AI', level: 'Easy' }
    */
   const startGame = (firstPlayer, secondPlayer) => {
     resetGame();
@@ -706,30 +706,30 @@ const gameController = (() => {
     const player1Symbol = 'X';
     const player2Symbol = 'O';
 
-    if (firstPlayer.type === 'AI' && firstPlayer.level === 'Easy') {
+    if (firstPlayer.type === 'AI' && firstPlayer.level === 'easy') {
       setPlayer1(EasyAIPlayer(player1Symbol));
-    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'Medium') {
+    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'medium') {
       setPlayer1(MediumAIPlayer(player1Symbol));
-    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'Hard') {
+    } else if (firstPlayer.type === 'AI' && firstPlayer.level === 'hard') {
       setPlayer1(HardAIPlayer(player1Symbol));
     } else if (
       firstPlayer.type === 'AI' &&
-      firstPlayer.level === 'Unbeatable'
+      firstPlayer.level === 'unbeatable'
     ) {
       setPlayer1(UnbeatableAIPlayer(player1Symbol));
     } else {
       setPlayer1(HumanPlayer(firstPlayer.name, player1Symbol));
     }
 
-    if (secondPlayer.type === 'AI' && secondPlayer.level === 'Easy') {
+    if (secondPlayer.type === 'AI' && secondPlayer.level === 'easy') {
       setPlayer2(EasyAIPlayer(player2Symbol));
-    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'Medium') {
+    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'medium') {
       setPlayer2(MediumAIPlayer(player2Symbol));
-    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'Hard') {
+    } else if (secondPlayer.type === 'AI' && secondPlayer.level === 'hard') {
       setPlayer2(HardAIPlayer(player2Symbol));
     } else if (
       secondPlayer.type === 'AI' &&
-      secondPlayer.level === 'Unbeatable'
+      secondPlayer.level === 'unbeatable'
     ) {
       setPlayer2(UnbeatableAIPlayer(player2Symbol));
     } else {
@@ -763,6 +763,10 @@ const gameController = (() => {
 })();
 
 const displayController = (() => {
+  /* DOM Elements */
+
+  const gameInitializerSection = document.querySelector('.game-initializer');
+
   // Player 1
   const player1TypeRadios = document.querySelectorAll(
     'input[name="player1-type"]'
@@ -773,9 +777,11 @@ const displayController = (() => {
   const player1NameDiv = document.querySelector(
     '.player:nth-of-type(1) .player__name'
   );
+  const player1NameInput = player1NameDiv.lastElementChild;
   const player1AITypeDiv = document.querySelector(
     '.player:nth-of-type(1) .player__ai-type'
   );
+  const player1AILevelSelect = player1AITypeDiv.lastElementChild;
 
   // Player 2
   const player2TypeRadios = document.querySelectorAll(
@@ -787,11 +793,24 @@ const displayController = (() => {
   const player2NameDiv = document.querySelector(
     '.player:nth-of-type(2) .player__name'
   );
+  const player2NameInput = player2NameDiv.lastElementChild;
   const player2AITypeDiv = document.querySelector(
     '.player:nth-of-type(2) .player__ai-type'
   );
+  const player2AILevelSelect = player2AITypeDiv.lastElementChild;
 
-  const changePlayerIcon = (playerIconImg, playerType) => {
+  const startGameBtn = document.querySelector('.start-game-btn');
+
+  // Game Section
+  const gameSection = document.querySelector('.game');
+  const [gameStatusPlayer1Img, gameStatusPlayer2Img] =
+    document.querySelectorAll('.game__status-player-icon img');
+  const [gameStatusPlayer1NameDiv, gameStatusPlayer2NameDiv] =
+    document.querySelectorAll('.game__status-player-name');
+
+  /* Utility Functions */
+
+  const setPlayerIcon = (playerIconImg, playerType) => {
     if (playerType === 'AI') {
       playerIconImg.setAttribute('src', './assets/player-ai.svg');
     } else {
@@ -803,6 +822,24 @@ const displayController = (() => {
     element.classList.toggle('disabled');
   };
 
+  const applyTransition = (element) => {
+    element.classList.add('clicked');
+  };
+
+  const removeClickedClass = (e) => {
+    e.target.classList.remove('clicked');
+  };
+
+  const initGameSection = (player1, player2) => {
+    setPlayerIcon(gameStatusPlayer1Img, player1.getType());
+    setPlayerIcon(gameStatusPlayer2Img, player2.getType());
+
+    gameStatusPlayer1NameDiv.textContent = player1.getName();
+    gameStatusPlayer2NameDiv.textContent = player2.getName();
+  };
+
+  /* Public Functions */
+
   const handlePlayerTypeChange = (
     playerTypeRadios,
     playerIconImg,
@@ -813,35 +850,88 @@ const displayController = (() => {
       radio.addEventListener('change', () => {
         if (radio.checked) {
           if (radio.value === 'AI') {
-            changePlayerIcon(playerIconImg, 'AI');
+            setPlayerIcon(playerIconImg, 'AI');
           } else {
-            changePlayerIcon(playerIconImg, 'Human');
+            setPlayerIcon(playerIconImg, 'Human');
           }
+
           toggleElement(playerNameDiv);
           toggleElement(playerAITypeDiv);
+
+          playerNameDiv.lastElementChild.toggleAttribute('required');
         }
       });
     });
   };
 
-  const addClickedClass = (element) => {
-    element.classList.add('clicked');
-    const removeClickedClass = () => {
-      element.classList.remove('clicked');
+  const startGameBtnListener = (e) => {
+    e.preventDefault();
+
+    const player1 = {
+      type: player1TypeRadios[0].checked ? 'Human' : 'AI',
+      name: player1NameInput.value,
+      level: player1AILevelSelect.value,
     };
-    element.addEventListener('transitionend', removeClickedClass);
+
+    const player2 = {
+      type: player2TypeRadios[0].checked ? 'Human' : 'AI',
+      name: player2NameInput.value,
+      level: player2AILevelSelect.value,
+    };
+
+    if (player1.type === 'Human' && player1.name === '') {
+      player1NameInput.classList.add('invalid');
+      if (player2.type === 'Human' && player2.name === '') {
+        player2NameInput.classList.add('invalid');
+      }
+      return;
+    }
+
+    if (player2.type === 'Human' && player2.name === '') {
+      player2NameInput.classList.add('invalid');
+
+      if (player1.type === 'Human' && player1.name === '') {
+        player1NameInput.classList.add('invalid');
+      }
+      return;
+    }
+
+    gameController.startGame(player1, player2);
+    console.log(player1, player2);
+    console.log(
+      gameController.getPlayer1().getName(),
+      gameController.getPlayer1().getType()
+    );
+    initGameSection(gameController.getPlayer1(), gameController.getPlayer2());
+
+    gameInitializerSection.classList.add('disabled');
+    gameSection.classList.remove('disabled');
   };
 
-  handlePlayerTypeChange(
-    player1TypeRadios,
-    player1IconImg,
-    player1NameDiv,
-    player1AITypeDiv
-  );
-  handlePlayerTypeChange(
-    player2TypeRadios,
-    player2IconImg,
-    player2NameDiv,
-    player2AITypeDiv
-  );
+  const handleGameInitializerSection = () => {
+    handlePlayerTypeChange(
+      player1TypeRadios,
+      player1IconImg,
+      player1NameDiv,
+      player1AITypeDiv
+    );
+    handlePlayerTypeChange(
+      player2TypeRadios,
+      player2IconImg,
+      player2NameDiv,
+      player2AITypeDiv
+    );
+
+    /* Event Listeners */
+
+    player1NameInput.addEventListener('input', (e) => {
+      e.target.classList.remove('invalid');
+    });
+    player2NameInput.addEventListener('input', (e) => {
+      e.target.classList.remove('invalid');
+    });
+    startGameBtn.addEventListener('click', startGameBtnListener);
+  };
+
+  handleGameInitializerSection();
 })();
