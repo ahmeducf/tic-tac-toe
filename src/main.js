@@ -897,11 +897,6 @@ const displayController = (() => {
     }
 
     gameController.startGame(player1, player2);
-    console.log(player1, player2);
-    console.log(
-      gameController.getPlayer1().getName(),
-      gameController.getPlayer1().getType()
-    );
     initGameSection(gameController.getPlayer1(), gameController.getPlayer2());
 
     gameInitializerSection.classList.add('disabled');
