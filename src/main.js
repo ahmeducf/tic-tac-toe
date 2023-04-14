@@ -830,7 +830,10 @@ const displayController = (() => {
     e.target.classList.remove('clicked');
   };
 
-  const initGameSection = (player1, player2) => {
+  const renderGameSection = () => {
+    const player1 = gameController.getPlayer1();
+    const player2 = gameController.getPlayer2();
+
     setPlayerIcon(gameStatusPlayer1Img, player1.getType());
     setPlayerIcon(gameStatusPlayer2Img, player2.getType());
 
@@ -897,7 +900,7 @@ const displayController = (() => {
     }
 
     gameController.startGame(player1, player2);
-    initGameSection(gameController.getPlayer1(), gameController.getPlayer2());
+    renderGameSection();
 
     gameInitializerSection.classList.add('disabled');
     gameSection.classList.remove('disabled');
