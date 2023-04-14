@@ -110,7 +110,6 @@ button {
   grid-row: 2 / 3;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 30px;
   color: var(--grey);
   border: 1px solid var(--secondary);
@@ -127,13 +126,15 @@ button {
 }
 
 .game__status-player-id {
+  flex: 1;
   display: flex;
   gap: 5px;
   justify-content: center;
   align-items: center;
   background-color: var(--secondary);
   padding: 10px;
-  min-width: 162px;
+  width: 162px;
+  word-wrap: break-word;
 }
 
 .game__status-player-symbol img {
@@ -145,6 +146,7 @@ button {
   font-size: 1rem;
   font-weight: 700;
   margin-top: -3px;
+  overflow: auto;
 }
 
 .game__status-player-icon {
