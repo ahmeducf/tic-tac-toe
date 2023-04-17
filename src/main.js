@@ -877,69 +877,69 @@ const displayController = (() => {
     });
   };
 
-  const handlePlayerTypeChange = (
-    playerTypeRadios,
-    playerIconImg,
-    playerNameDiv,
-    playerAITypeDiv
-  ) => {
-    [...playerTypeRadios].forEach((radio) => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          if (radio.value === 'AI') {
-            setPlayerIcon(playerIconImg, 'AI');
-          } else {
-            setPlayerIcon(playerIconImg, 'Human');
+  const handleGameInitializerSection = () => {
+    const handlePlayerTypeChange = (
+      playerTypeRadios,
+      playerIconImg,
+      playerNameDiv,
+      playerAITypeDiv
+    ) => {
+      [...playerTypeRadios].forEach((radio) => {
+        radio.addEventListener('change', () => {
+          if (radio.checked) {
+            if (radio.value === 'AI') {
+              setPlayerIcon(playerIconImg, 'AI');
+            } else {
+              setPlayerIcon(playerIconImg, 'Human');
+            }
+
+            toggleElement(playerNameDiv);
+            toggleElement(playerAITypeDiv);
+
+            playerNameDiv.lastElementChild.toggleAttribute('required');
           }
-
-          toggleElement(playerNameDiv);
-          toggleElement(playerAITypeDiv);
-
-          playerNameDiv.lastElementChild.toggleAttribute('required');
-        }
+        });
       });
-    });
-  };
-
-  const startGameBtnListener = (e) => {
-    e.preventDefault();
-
-    const player1 = {
-      type: player1TypeRadios[0].checked ? 'Human' : 'AI',
-      name: player1NameInput.value,
-      level: player1AILevelSelect.value,
     };
 
-    const player2 = {
-      type: player2TypeRadios[0].checked ? 'Human' : 'AI',
-      name: player2NameInput.value,
-      level: player2AILevelSelect.value,
-    };
+    const startGameBtnListener = (e) => {
+      e.preventDefault();
 
-    if (player1.type === 'Human' && player1.name === '') {
-      player1NameInput.classList.add('invalid');
-      if (player2.type === 'Human' && player2.name === '') {
-        player2NameInput.classList.add('invalid');
-      }
-      return;
-    }
+      const player1 = {
+        type: player1TypeRadios[0].checked ? 'Human' : 'AI',
+        name: player1NameInput.value,
+        level: player1AILevelSelect.value,
+      };
 
-    if (player2.type === 'Human' && player2.name === '') {
-      player2NameInput.classList.add('invalid');
+      const player2 = {
+        type: player2TypeRadios[0].checked ? 'Human' : 'AI',
+        name: player2NameInput.value,
+        level: player2AILevelSelect.value,
+      };
 
       if (player1.type === 'Human' && player1.name === '') {
         player1NameInput.classList.add('invalid');
+        if (player2.type === 'Human' && player2.name === '') {
+          player2NameInput.classList.add('invalid');
+        }
+        return;
       }
-      return;
-    }
 
-    gameController.startGame(player1, player2);
-    updateGameStatus();
-    updateGameBoard();
-    applyTransition(e.target);
-  };
+      if (player2.type === 'Human' && player2.name === '') {
+        player2NameInput.classList.add('invalid');
 
-  const handleGameInitializerSection = () => {
+        if (player1.type === 'Human' && player1.name === '') {
+          player1NameInput.classList.add('invalid');
+        }
+        return;
+      }
+
+      gameController.startGame(player1, player2);
+      updateGameStatus();
+      updateGameBoard();
+      applyTransition(e.target);
+    };
+
     handlePlayerTypeChange(
       player1TypeRadios,
       player1IconImg,
@@ -977,8 +977,8 @@ const displayController = (() => {
       const col = e.target.parentElement.dataset.cellCol;
 
       gameController.playRound([row, col]);
-      updateGameBoard();
       applyTransition(e.target.parentElement);
+      updateGameBoard();
     };
 
     /* Event listeners */
