@@ -878,7 +878,24 @@ const displayController = (() => {
   };
 
   const showGameResult = () => {
-    const resultModalSection = document.querySelector('.result-modal');
+    const resultModalContainer = document.querySelector(
+      '.result-modal-container'
+    );
+    const resultModalWinnerSymbolDiv = document.querySelector(
+      '.result-modal__winner-symbol'
+    );
+    const resultModalMessageP = document.querySelector(
+      '.result-modal__message p'
+    );
+
+    if (gameController.checkDraw()) {
+      resultModalWinnerSymbolDiv.remove();
+      resultModalMessageP.textContent = "It's a draw!";
+    } else if (gameController.getWinner()) {
+      const winner = gameController.getWinner();
+      resultModalWinnerSymbolDiv.dataset.winner = winner.getSymbol();
+    }
+    toggleElement(resultModalContainer);
   };
 
   const renderGame = () => {
@@ -976,6 +993,7 @@ const displayController = (() => {
     startGameBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
       setTimeout(() => {
+        console.log(e);
         gameInitializerSection.classList.add('disabled');
         gameSection.classList.remove('disabled');
       }, 300);

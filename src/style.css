@@ -497,13 +497,28 @@ button {
   gap: 10px;
   font-size: 2.4rem;
   font-weight: 500;
+  color: var(--grey);
+}
+
+.result-modal__message[data-winner='X'] {
   color: var(--dark-cyan);
 }
 
+.result-modal__message[data-winner='O'] {
+  color: var(--lighten-yellow);
+}
+
 .result-modal__winner-symbol {
-  background: url(./assets/icon-x.svg) no-repeat center / 100%;
   width: 45px;
   height: 45px;
+}
+
+.result-modal__winner-symbol[data-winner='X'] {
+  background: url(./assets/icon-x.svg) no-repeat center / 100%;
+}
+
+.result-modal__winner-symbol[data-winner='O'] {
+  background: url(./assets/icon-o.svg) no-repeat center / 100%;
 }
 
 /* Result-Modal Footer */
