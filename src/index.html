@@ -216,27 +216,29 @@
       </main>
     </section>
 
-    <section class="disabled result-modal">
-      <div class="result-modal__content">
-        <div class="result-modal__header">
-          <h2 class="result-modal__title">Game Over!</h2>
-          <button class="result-modal__close-btn">
-            <img src="./assets/icon-close.svg" alt="Close" />
-          </button>
-        </div>
+    <div class="disabled result-modal-container">
+      <section class="result-modal">
+        <div class="result-modal__content">
+          <div class="result-modal__header">
+            <h2 class="result-modal__title">Game Over!</h2>
+            <button class="result-modal__close-btn">
+              <img src="./assets/icon-close.svg" alt="Close" />
+            </button>
+          </div>
 
-        <div class="result-modal__body">
-          <div class="result-modal__message">
-            <div class="result-modal__winner-symbol"></div>
-            <p>Won the game</p>
+          <div class="result-modal__body">
+            <div class="result-modal__message">
+              <div class="result-modal__winner-symbol"></div>
+              <p>Won the game</p>
+            </div>
+          </div>
+
+          <div class="result-modal__footer">
+            <button class="result-modal__restart-btn">Restart</button>
+            <button class="result-modal__quit-btn">Quit</button>
           </div>
         </div>
-
-        <div class="result-modal__footer">
-          <button class="result-modal__restart-btn">Restart</button>
-          <button class="result-modal__quit-btn">Quit</button>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </body>
 </html>
