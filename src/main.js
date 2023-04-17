@@ -877,6 +877,18 @@ const displayController = (() => {
     });
   };
 
+  const showGameResult = () => {
+    const resultModalSection = document.querySelector('.result-modal');
+  };
+
+  const renderGame = () => {
+    updateGameStatus();
+    updateGameBoard();
+    if (gameController.isGameOver()) {
+      showGameResult();
+    }
+  };
+
   const handleGameInitializerSection = () => {
     const handlePlayerTypeChange = (
       playerTypeRadios,
@@ -935,8 +947,7 @@ const displayController = (() => {
       }
 
       gameController.startGame(player1, player2);
-      updateGameStatus();
-      updateGameBoard();
+      renderGame();
       applyTransition(e.target);
     };
 
@@ -978,7 +989,7 @@ const displayController = (() => {
 
       gameController.playRound([row, col]);
       applyTransition(e.target.parentElement);
-      updateGameBoard();
+      renderGame();
     };
 
     /* Event listeners */
@@ -986,9 +997,6 @@ const displayController = (() => {
       cell.addEventListener('click', cellClickListener);
       cell.addEventListener('transitionend', (e) => {
         removeClickedClass(e);
-        setTimeout(() => {
-          updateGameStatus();
-        }, 300);
       });
     });
   };
