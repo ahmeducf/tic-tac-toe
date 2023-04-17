@@ -745,6 +745,7 @@ const gameController = (() => {
       }
     } else if (currentPlayer.getType() === 'AI') {
       playAI();
+      switchCurrentPlayer();
     }
   };
 
@@ -807,6 +808,10 @@ const displayController = (() => {
     document.querySelectorAll('.game__status-player-icon img');
   const [gameStatusPlayer1NameDiv, gameStatusPlayer2NameDiv] =
     document.querySelectorAll('.game__status-player-name');
+  const gameStatusMessageTurnIconDiv = document.querySelector(
+    '.status-message__turn-icon'
+  );
+  const gameBoardCellDivs = [...document.querySelectorAll('.game__board-cell')];
 
   /* Utility Functions */
 
@@ -830,18 +835,47 @@ const displayController = (() => {
     e.target.classList.remove('clicked');
   };
 
-  const renderGameSection = () => {
+  const updateGameStatus = () => {
     const player1 = gameController.getPlayer1();
     const player2 = gameController.getPlayer2();
+    const currentPlayer = gameController.getCurrentPlayer();
 
     setPlayerIcon(gameStatusPlayer1Img, player1.getType());
     setPlayerIcon(gameStatusPlayer2Img, player2.getType());
 
     gameStatusPlayer1NameDiv.textContent = player1.getName();
     gameStatusPlayer2NameDiv.textContent = player2.getName();
+
+    gameStatusMessageTurnIconDiv.dataset.turn = currentPlayer.getSymbol();
   };
 
-  /* Public Functions */
+  const updateGameBoard = () => {
+    const currentPlayer = gameController.getCurrentPlayer();
+
+    gameBoardCellDivs.forEach((cell) => {
+      const cellSymbolDiv = cell.firstElementChild;
+      const row = parseInt(cell.dataset.cellRow, 10);
+      const col = parseInt(cell.dataset.cellCol, 10);
+      const LogicalCellValue = gameBoard.getCell(row, col).getValue();
+
+      switch (LogicalCellValue) {
+        case '_':
+          cellSymbolDiv.dataset.turn = currentPlayer.getSymbol();
+          cellSymbolDiv.dataset.set = '';
+          break;
+        case 'X':
+          cellSymbolDiv.dataset.turn = '';
+          cellSymbolDiv.dataset.set = 'X';
+          break;
+        case 'O':
+          cellSymbolDiv.dataset.turn = '';
+          cellSymbolDiv.dataset.set = 'O';
+          break;
+        default:
+          break;
+      }
+    });
+  };
 
   const handlePlayerTypeChange = (
     playerTypeRadios,
@@ -900,10 +934,9 @@ const displayController = (() => {
     }
 
     gameController.startGame(player1, player2);
-    renderGameSection();
-
-    gameInitializerSection.classList.add('disabled');
-    gameSection.classList.remove('disabled');
+    updateGameStatus();
+    updateGameBoard();
+    applyTransition(e.target);
   };
 
   const handleGameInitializerSection = () => {
@@ -929,7 +962,37 @@ const displayController = (() => {
       e.target.classList.remove('invalid');
     });
     startGameBtn.addEventListener('click', startGameBtnListener);
+    startGameBtn.addEventListener('transitionend', (e) => {
+      removeClickedClass(e);
+      setTimeout(() => {
+        gameInitializerSection.classList.add('disabled');
+        gameSection.classList.remove('disabled');
+      }, 300);
+    });
+  };
+
+  const handleGameSection = () => {
+    const cellClickListener = (e) => {
+      const row = e.target.parentElement.dataset.cellRow;
+      const col = e.target.parentElement.dataset.cellCol;
+
+      gameController.playRound([row, col]);
+      updateGameBoard();
+      applyTransition(e.target.parentElement);
+    };
+
+    /* Event listeners */
+    gameBoardCellDivs.forEach((cell) => {
+      cell.addEventListener('click', cellClickListener);
+      cell.addEventListener('transitionend', (e) => {
+        removeClickedClass(e);
+        setTimeout(() => {
+          updateGameStatus();
+        }, 300);
+      });
+    });
   };
 
   handleGameInitializerSection();
+  handleGameSection();
 })();
