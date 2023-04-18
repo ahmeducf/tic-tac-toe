@@ -887,7 +887,7 @@ const displayController = (() => {
       '.result-modal__winner-symbol'
     );
     const resultModalMessageP = document.querySelector(
-      '.result-modal__message p'
+      '.result-modal__message'
     );
 
     if (gameController.checkDraw()) {
@@ -895,6 +895,7 @@ const displayController = (() => {
       resultModalMessageP.textContent = "It's a draw!";
     } else if (gameController.getWinner()) {
       const winner = gameController.getWinner();
+      resultModalMessageP.dataset.winner = winner.getSymbol();
       resultModalWinnerSymbolDiv.dataset.winner = winner.getSymbol();
     }
     toggleElement(resultModalContainer);
