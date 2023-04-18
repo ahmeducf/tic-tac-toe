@@ -169,6 +169,60 @@ const gameBoard = (() => {
   };
 
   /**
+   * getWinningCells returns an array of the indices of the winning cells
+   * @returns {Array} winningCells
+   */
+  const getWinningCells = () => {
+    for (let i = 0; i < 3; i++) {
+      if (
+        board[i][0].getValue() === board[i][1].getValue() &&
+        board[i][1].getValue() === board[i][2].getValue() &&
+        board[i][0].getValue() !== '_'
+      ) {
+        return [
+          [i, 0],
+          [i, 1],
+          [i, 2],
+        ];
+      }
+      if (
+        board[0][i].getValue() === board[1][i].getValue() &&
+        board[1][i].getValue() === board[2][i].getValue() &&
+        board[0][i].getValue() !== '_'
+      ) {
+        return [
+          [0, i],
+          [1, i],
+          [2, i],
+        ];
+      }
+    }
+    if (
+      board[0][0].getValue() === board[1][1].getValue() &&
+      board[1][1].getValue() === board[2][2].getValue() &&
+      board[0][0].getValue() !== '_'
+    ) {
+      return [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+      ];
+    }
+    if (
+      board[0][2].getValue() === board[1][1].getValue() &&
+      board[1][1].getValue() === board[2][0].getValue() &&
+      board[0][2].getValue() !== '_'
+    ) {
+      return [
+        [0, 2],
+        [1, 1],
+        [2, 0],
+      ];
+    }
+    return false;
+  };
+
+  /**
    * checkDraw returns true if the game is a draw, false otherwise
    * @returns {boolean} isDraw
    */
@@ -198,6 +252,7 @@ const gameBoard = (() => {
     checkDraw,
     getEmptyCells,
     checkWin,
+    getWinningCells,
     printBoard,
   };
 })();
@@ -760,6 +815,7 @@ const gameController = (() => {
     playRound,
     startGame,
     restartGame,
+    resetGame,
   };
 })();
 
@@ -858,23 +914,27 @@ const displayController = (() => {
     const currentPlayer = gameController.getCurrentPlayer();
 
     gameBoardCellDivs.forEach((cell) => {
-      const cellSymbolDiv = cell.firstElementChild;
-      const row = parseInt(cell.dataset.cellRow, 10);
-      const col = parseInt(cell.dataset.cellCol, 10);
+      const parentCell = cell;
+      const cellSymbolDiv = parentCell.firstElementChild;
+      const row = parseInt(parentCell.dataset.cellRow, 10);
+      const col = parseInt(parentCell.dataset.cellCol, 10);
       const LogicalCellValue = gameBoard.getCell(row, col).getValue();
 
       switch (LogicalCellValue) {
         case '_':
           cellSymbolDiv.dataset.turn = currentPlayer.getSymbol();
           cellSymbolDiv.dataset.set = '';
+          parentCell.dataset.win = '';
           break;
         case 'X':
           cellSymbolDiv.dataset.turn = '';
           cellSymbolDiv.dataset.set = 'X';
+          parentCell.dataset.win = '';
           break;
         case 'O':
           cellSymbolDiv.dataset.turn = '';
           cellSymbolDiv.dataset.set = 'O';
+          parentCell.dataset.win = '';
           break;
         default:
           break;
@@ -882,11 +942,33 @@ const displayController = (() => {
     });
 
     if (gameController.isGameOver()) {
-      gameBoardCellDivs.forEach((cell) => {
-        const cellSymbolDiv = cell.firstElementChild;
+      if (gameController.checkDraw()) {
+        gameBoardCellDivs.forEach((cell) => {
+          const parentCell = cell;
+          const cellSymbolDiv = parentCell.firstElementChild;
+          cellSymbolDiv.dataset.turn = '';
 
-        cellSymbolDiv.dataset.turn = '';
-      });
+          parentCell.style.backgroundColor = 'var(--dark-grey)';
+        });
+      } else {
+        gameBoardCellDivs.forEach((cell) => {
+          const parentCell = cell;
+          const cellSymbolDiv = parentCell.firstElementChild;
+          cellSymbolDiv.dataset.turn = '';
+
+          const row = parseInt(cell.dataset.cellRow, 10);
+          const col = parseInt(cell.dataset.cellCol, 10);
+          const winningCells = gameController.getGameBoard().getWinningCells();
+          const winner = gameController.getWinner();
+          const isWinningCell = winningCells.some(
+            (winningCell) => winningCell[0] === row && winningCell[1] === col
+          );
+
+          if (isWinningCell) {
+            parentCell.dataset.win = winner.getSymbol();
+          }
+        });
+      }
     }
   };
 
@@ -895,13 +977,14 @@ const displayController = (() => {
       '.result-modal__winner-symbol'
     );
     const resultModalMessageP = document.querySelector(
-      '.result-modal__message'
+      '.result-modal__message p'
     );
 
     if (gameController.checkDraw()) {
-      resultModalWinnerSymbolDiv.remove();
+      resultModalWinnerSymbolDiv.classList.add('disabled');
       resultModalMessageP.textContent = "It's a draw!";
     } else if (gameController.getWinner()) {
+      resultModalWinnerSymbolDiv.classList.remove('disabled');
       const winner = gameController.getWinner();
       resultModalMessageP.dataset.winner = winner.getSymbol();
       resultModalWinnerSymbolDiv.dataset.winner = winner.getSymbol();
@@ -918,6 +1001,12 @@ const displayController = (() => {
       }, 1000);
     }
   };
+
+  const getPlayerData = (typeRadios, nameInput, aiLevelSelect) => ({
+    type: typeRadios[0].checked ? 'Human' : 'AI',
+    name: nameInput.value,
+    level: aiLevelSelect.value,
+  });
 
   const handleGameInitializerSection = () => {
     const handlePlayerTypeChange = (
@@ -943,12 +1032,6 @@ const displayController = (() => {
         });
       });
     };
-
-    const getPlayerData = (typeRadios, nameInput, aiLevelSelect) => ({
-      type: typeRadios[0].checked ? 'Human' : 'AI',
-      name: nameInput.value,
-      level: aiLevelSelect.value,
-    });
 
     const startGameBtnListener = (e) => {
       e.preventDefault();
@@ -1038,7 +1121,19 @@ const displayController = (() => {
     });
 
     restartBtn.addEventListener('click', () => {
-      gameController.restartGame();
+      const player1 = getPlayerData(
+        player1TypeRadios,
+        player1NameInput,
+        player1AILevelSelect
+      );
+
+      const player2 = getPlayerData(
+        player2TypeRadios,
+        player2NameInput,
+        player2AILevelSelect
+      );
+
+      gameController.startGame(player1, player2);
       renderGame();
       applyTransition(restartBtn);
     });
@@ -1047,7 +1142,7 @@ const displayController = (() => {
     });
 
     quitBtn.addEventListener('click', () => {
-      gameController.restartGame();
+      gameController.resetGame();
       applyTransition(quitBtn);
 
       player1NameInput.value = '';
@@ -1068,13 +1163,25 @@ const displayController = (() => {
     const closeBtn = document.querySelector('.result-modal__close-btn');
 
     const restartBtnClickListener = (e) => {
-      gameController.restartGame();
+      const player1 = getPlayerData(
+        player1TypeRadios,
+        player1NameInput,
+        player1AILevelSelect
+      );
+
+      const player2 = getPlayerData(
+        player2TypeRadios,
+        player2NameInput,
+        player2AILevelSelect
+      );
+
+      gameController.startGame(player1, player2);
       renderGame();
       applyTransition(e.target);
     };
 
     const quitBtnClickHandler = (e) => {
-      gameController.restartGame();
+      gameController.resetGame();
       applyTransition(e.target);
 
       player1NameInput.value = '';
