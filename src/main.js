@@ -905,7 +905,9 @@ const displayController = (() => {
     updateGameStatus();
     updateGameBoard();
     if (gameController.isGameOver()) {
-      showGameResult();
+      setTimeout(() => {
+        showGameResult();
+      }, 1000);
     }
   };
 
