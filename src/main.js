@@ -813,6 +813,11 @@ const displayController = (() => {
   );
   const gameBoardCellDivs = [...document.querySelectorAll('.game__board-cell')];
 
+  // Result Section
+  const resultModalContainer = document.querySelector(
+    '.result-modal-container'
+  );
+
   /* Utility Functions */
 
   const setPlayerIcon = (playerIconImg, playerType) => {
@@ -878,9 +883,6 @@ const displayController = (() => {
   };
 
   const showGameResult = () => {
-    const resultModalContainer = document.querySelector(
-      '.result-modal-container'
-    );
     const resultModalWinnerSymbolDiv = document.querySelector(
       '.result-modal__winner-symbol'
     );
@@ -1019,6 +1021,27 @@ const displayController = (() => {
     });
   };
 
+  const handleResultSection = () => {
+    const restartBtn = document.querySelector('.result-modal__restart-btn');
+    const quitBtn = document.querySelector('.result-modal__quit-btn');
+
+    const restartBtnClickListener = (e) => {
+      gameController.restartGame();
+      renderGame();
+      applyTransition(e.target);
+    };
+    restartBtn.addEventListener('transitionend', (e) => {
+      removeClickedClass(e);
+      setTimeout(() => {
+        resultModalContainer.classList.add('disabled');
+      }, 300);
+    });
+
+    /* Event listeners */
+    restartBtn.addEventListener('click', restartBtnClickListener);
+  };
+
   handleGameInitializerSection();
   handleGameSection();
+  handleResultSection();
 })();
