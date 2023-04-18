@@ -944,20 +944,26 @@ const displayController = (() => {
       });
     };
 
+    const getPlayerData = (typeRadios, nameInput, aiLevelSelect) => ({
+      type: typeRadios[0].checked ? 'Human' : 'AI',
+      name: nameInput.value,
+      level: aiLevelSelect.value,
+    });
+
     const startGameBtnListener = (e) => {
       e.preventDefault();
 
-      const player1 = {
-        type: player1TypeRadios[0].checked ? 'Human' : 'AI',
-        name: player1NameInput.value,
-        level: player1AILevelSelect.value,
-      };
+      const player1 = getPlayerData(
+        player1TypeRadios,
+        player1NameInput,
+        player1AILevelSelect
+      );
 
-      const player2 = {
-        type: player2TypeRadios[0].checked ? 'Human' : 'AI',
-        name: player2NameInput.value,
-        level: player2AILevelSelect.value,
-      };
+      const player2 = getPlayerData(
+        player2TypeRadios,
+        player2NameInput,
+        player2AILevelSelect
+      );
 
       if (player1.type === 'Human' && player1.name === '') {
         player1NameInput.classList.add('invalid');
