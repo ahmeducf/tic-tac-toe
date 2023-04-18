@@ -1013,6 +1013,9 @@ const displayController = (() => {
   };
 
   const handleGameSection = () => {
+    const restartBtn = document.querySelector('.game__restart-btn');
+    const quitBtn = document.querySelector('.game__quit-btn');
+
     const cellClickListener = (e) => {
       const row = e.target.parentElement.dataset.cellRow;
       const col = e.target.parentElement.dataset.cellCol;
@@ -1026,6 +1029,30 @@ const displayController = (() => {
     gameBoardCellDivs.forEach((cell) => {
       cell.addEventListener('click', cellClickListener);
       cell.addEventListener('transitionend', removeClickedClass);
+    });
+
+    restartBtn.addEventListener('click', () => {
+      gameController.restartGame();
+      renderGame();
+      applyTransition(restartBtn);
+    });
+    restartBtn.addEventListener('transitionend', (e) => {
+      removeClickedClass(e);
+    });
+
+    quitBtn.addEventListener('click', () => {
+      gameController.restartGame();
+      applyTransition(quitBtn);
+
+      player1NameInput.value = '';
+      player2NameInput.value = '';
+    });
+    quitBtn.addEventListener('transitionend', (e) => {
+      removeClickedClass(e);
+      setTimeout(() => {
+        gameSection.classList.add('disabled');
+        gameInitializerSection.classList.remove('disabled');
+      }, 300);
     });
   };
 
