@@ -1033,6 +1033,9 @@ const displayController = (() => {
     const quitBtnClickHandler = (e) => {
       gameController.restartGame();
       applyTransition(e.target);
+
+      player1NameInput.value = '';
+      player2NameInput.value = '';
     };
 
     /* Event listeners */
