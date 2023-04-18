@@ -995,7 +995,6 @@ const displayController = (() => {
     startGameBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
       setTimeout(() => {
-        console.log(e);
         gameInitializerSection.classList.add('disabled');
         gameSection.classList.remove('disabled');
       }, 300);
@@ -1015,9 +1014,7 @@ const displayController = (() => {
     /* Event listeners */
     gameBoardCellDivs.forEach((cell) => {
       cell.addEventListener('click', cellClickListener);
-      cell.addEventListener('transitionend', (e) => {
-        removeClickedClass(e);
-      });
+      cell.addEventListener('transitionend', removeClickedClass);
     });
   };
 
