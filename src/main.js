@@ -880,6 +880,14 @@ const displayController = (() => {
           break;
       }
     });
+
+    if (gameController.isGameOver()) {
+      gameBoardCellDivs.forEach((cell) => {
+        const cellSymbolDiv = cell.firstElementChild;
+
+        cellSymbolDiv.dataset.turn = '';
+      });
+    }
   };
 
   const showGameResult = () => {
@@ -1059,14 +1067,6 @@ const displayController = (() => {
     });
     closeBtn.addEventListener('click', () => {
       resultModalContainer.classList.add('disabled');
-
-      if (gameController.isGameOver()) {
-        gameBoardCellDivs.forEach((cell) => {
-          const cellSymbolDiv = cell.firstElementChild;
-
-          cellSymbolDiv.dataset.turn = '';
-        });
-      }
     });
   };
 
