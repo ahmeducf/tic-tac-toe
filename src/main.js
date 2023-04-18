@@ -1054,6 +1054,14 @@ const displayController = (() => {
     });
     closeBtn.addEventListener('click', () => {
       resultModalContainer.classList.add('disabled');
+
+      if (gameController.isGameOver()) {
+        gameBoardCellDivs.forEach((cell) => {
+          const cellSymbolDiv = cell.firstElementChild;
+
+          cellSymbolDiv.dataset.turn = '';
+        });
+      }
     });
   };
 
