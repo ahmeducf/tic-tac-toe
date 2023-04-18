@@ -1027,15 +1027,29 @@ const displayController = (() => {
       renderGame();
       applyTransition(e.target);
     };
+
+    const quitBtnClickHandler = (e) => {
+      gameController.restartGame();
+      applyTransition(e.target);
+    };
+
+    /* Event listeners */
+    restartBtn.addEventListener('click', restartBtnClickListener);
     restartBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
       setTimeout(() => {
         resultModalContainer.classList.add('disabled');
       }, 300);
     });
-
-    /* Event listeners */
-    restartBtn.addEventListener('click', restartBtnClickListener);
+    quitBtn.addEventListener('click', quitBtnClickHandler);
+    quitBtn.addEventListener('transitionend', (e) => {
+      removeClickedClass(e);
+      setTimeout(() => {
+        resultModalContainer.classList.add('disabled');
+        gameSection.classList.add('disabled');
+        gameInitializerSection.classList.remove('disabled');
+      }, 300);
+    });
   };
 
   handleGameInitializerSection();
