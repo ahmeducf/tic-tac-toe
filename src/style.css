@@ -481,6 +481,11 @@ button {
   top: 14px;
   background-color: transparent;
   box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.result-modal__close-btn:hover {
+  transform: scale(1.1);
 }
 
 .result-modal__close-btn img {

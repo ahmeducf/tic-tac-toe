@@ -1022,6 +1022,7 @@ const displayController = (() => {
   const handleResultSection = () => {
     const restartBtn = document.querySelector('.result-modal__restart-btn');
     const quitBtn = document.querySelector('.result-modal__quit-btn');
+    const closeBtn = document.querySelector('.result-modal__close-btn');
 
     const restartBtnClickListener = (e) => {
       gameController.restartGame();
@@ -1050,6 +1051,9 @@ const displayController = (() => {
         gameSection.classList.add('disabled');
         gameInitializerSection.classList.remove('disabled');
       }, 300);
+    });
+    closeBtn.addEventListener('click', () => {
+      resultModalContainer.classList.add('disabled');
     });
   };
 
