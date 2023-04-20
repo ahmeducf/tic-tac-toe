@@ -1,8 +1,6 @@
-import GameController from './game-controller.js';
+import gameController from './game-controller.js';
 
 const DisplayController = () => {
-  const gameController = GameController();
-
   /* DOM Elements */
 
   const gameInitializerSection = document.querySelector('.game-initializer');
@@ -405,4 +403,4 @@ const DisplayController = () => {
   };
 };
 
-export default DisplayController;
+export default DisplayController();

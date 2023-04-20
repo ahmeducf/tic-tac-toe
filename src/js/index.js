@@ -1,7 +1,6 @@
-import DisplayController from './display-controller.js';
+import displayController from './display-controller.js';
 
 function init() {
-  const displayController = DisplayController();
   displayController.init();
 }
 

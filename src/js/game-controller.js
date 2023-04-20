@@ -1,4 +1,4 @@
-import GameBoard from './game-board.js';
+import gameBoard from './game-board.js';
 import HumanPlayer from './human-player.js';
 import {
   EasyAIPlayer,
@@ -24,7 +24,6 @@ import {
  * @property {function} restartGame - restarts the game
  */
 const GameController = () => {
-  const gameBoard = GameBoard();
   let player1;
   let player2;
   let currentPlayer;
