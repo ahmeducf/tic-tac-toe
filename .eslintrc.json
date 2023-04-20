@@ -6,10 +6,12 @@
   "extends": ["airbnb-base", "prettier"],
   "overrides": [],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "rules": {
     "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
+    "import/extensions": "off",
 
     // special prettier
     "curly": ["error", "all"],
