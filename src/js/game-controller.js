@@ -256,10 +256,12 @@ const GameController = () => {
     getWinner,
     checkDraw,
     isGameOver,
+    switchCurrentPlayer,
     playHuman,
+    playAI,
     startGame,
     resetGame,
   };
 };
 
-export default GameController;
+export default GameController();

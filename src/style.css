@@ -220,6 +220,10 @@ button {
   background-color: var(--lighten-yellow);
 }
 
+.game-over-draw {
+  background-color: var(--dark-grey);
+}
+
 .game__board-cell .cell-symbol {
   width: 100%;
   height: 100%;

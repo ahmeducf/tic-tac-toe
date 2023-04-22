@@ -106,21 +106,21 @@ const DisplayController = () => {
         case '_':
           cellSymbolDiv.dataset.turn = currentPlayer.getSymbol();
           cellSymbolDiv.dataset.set = '';
-          parentCell.dataset.win = '';
           break;
         case 'X':
           cellSymbolDiv.dataset.turn = '';
           cellSymbolDiv.dataset.set = 'X';
-          parentCell.dataset.win = '';
           break;
         case 'O':
           cellSymbolDiv.dataset.turn = '';
           cellSymbolDiv.dataset.set = 'O';
-          parentCell.dataset.win = '';
           break;
         default:
           break;
       }
+
+      parentCell.dataset.win = '';
+      parentCell.classList.remove('game-over-draw');
     });
 
     if (gameController.isGameOver()) {
@@ -130,7 +130,7 @@ const DisplayController = () => {
           const cellSymbolDiv = parentCell.firstElementChild;
           cellSymbolDiv.dataset.turn = '';
 
-          parentCell.style.backgroundColor = 'var(--dark-grey)';
+          parentCell.classList.add('game-over-draw');
         });
       } else {
         gameBoardCellDivs.forEach((cell) => {
@@ -190,6 +190,21 @@ const DisplayController = () => {
     level: aiLevelSelect.value,
   });
 
+  const aiVsAiGameLoop = () => {
+    let i = 1;
+    while (i < 10) {
+      setTimeout(() => {
+        if (!gameController.isGameOver()) {
+          gameController.playAI();
+          gameController.switchCurrentPlayer();
+          renderGame();
+        }
+      }, 2000 * i);
+
+      i += 1;
+    }
+  };
+
   const handleGameInitializerSection = () => {
     const handlePlayerTypeChange = (
       playerTypeRadios,
@@ -217,6 +232,7 @@ const DisplayController = () => {
 
     const startGameBtnListener = (e) => {
       e.preventDefault();
+      applyTransition(e.target);
 
       const player1 = getPlayerData(
         player1TypeRadios,
@@ -249,7 +265,16 @@ const DisplayController = () => {
 
       gameController.startGame(player1, player2);
       renderGame();
-      applyTransition(e.target);
+
+      if (player1.type === 'AI' && player2.type === 'AI') {
+        aiVsAiGameLoop();
+      } else if (player1.type === 'AI') {
+        setTimeout(() => {
+          gameController.playAI();
+          gameController.switchCurrentPlayer();
+          renderGame();
+        }, 2000);
+      }
     };
 
     handlePlayerTypeChange(
@@ -273,6 +298,7 @@ const DisplayController = () => {
     player2NameInput.addEventListener('input', (e) => {
       e.target.classList.remove('invalid');
     });
+
     startGameBtn.addEventListener('click', startGameBtnListener);
     startGameBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
@@ -288,12 +314,32 @@ const DisplayController = () => {
     const quitBtn = document.querySelector('.game__quit-btn');
 
     const cellClickListener = (e) => {
+      if (
+        gameController.isGameOver() ||
+        e.target.parentElement.classList.contains('clicked') ||
+        gameController.getCurrentPlayer().getType() === 'AI'
+      ) {
+        return;
+      }
+
       const row = e.target.parentElement.dataset.cellRow;
       const col = e.target.parentElement.dataset.cellCol;
 
-      gameController.playRound([row, col]);
+      gameController.playHuman([row, col]);
+      gameController.switchCurrentPlayer();
       applyTransition(e.target.parentElement);
       renderGame();
+
+      if (
+        gameController.getCurrentPlayer().getType() === 'AI' &&
+        !gameController.isGameOver()
+      ) {
+        setTimeout(() => {
+          gameController.playAI();
+          gameController.switchCurrentPlayer();
+          renderGame();
+        }, 2000);
+      }
     };
 
     /* Event listeners */
