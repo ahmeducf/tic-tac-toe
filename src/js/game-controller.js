@@ -19,7 +19,10 @@ import {
  * @property {function} isGameOver - returns true if the game is over, false otherwise
  * @property {function} getWinner - returns the winner (null if no winner)
  * @property {function} checkDraw - returns true if the game is a draw, false otherwise
- * @property {function} playRound - plays a round of the game
+ * @property {function} switchCurrentPlayer - switches the current player
+ * @property {function} resetGame - resets the game
+ * @property {function} playAI - plays a round of the game for the AI
+ * @property {function} playHuman - plays a round of the game for the human
  * @property {function} startGame - starts the game
  * @property {function} restartGame - restarts the game
  */
@@ -180,17 +183,12 @@ const GameController = () => {
    * If the next player is an AI, it will play for the AI
    * @param {Array} cell - call it with the cell to play (e.g. [0, 0])
    */
-  const playRound = (cell) => {
+  const playHuman = (cell) => {
     if (gameOver) {
       return;
     }
 
     play(cell);
-    switchCurrentPlayer();
-    if (currentPlayer.getType() === 'AI') {
-      playAI();
-      switchCurrentPlayer();
-    }
   };
 
   /**
@@ -248,16 +246,6 @@ const GameController = () => {
     }
 
     setCurrentPlayer(player1);
-
-    if (player1.getType() === 'AI' && player2.getType() === 'AI') {
-      while (!gameOver) {
-        playAI();
-        switchCurrentPlayer();
-      }
-    } else if (currentPlayer.getType() === 'AI') {
-      playAI();
-      switchCurrentPlayer();
-    }
   };
 
   return {
@@ -268,9 +256,8 @@ const GameController = () => {
     getWinner,
     checkDraw,
     isGameOver,
-    playRound,
+    playHuman,
     startGame,
-    restartGame,
     resetGame,
   };
 };
