@@ -1,6 +1,7 @@
 import gameController from './game-controller.js';
 
 const DisplayController = () => {
+  const timeoutIdList = [];
   /* DOM Elements */
 
   const gameInitializerSection = document.querySelector('.game-initializer');
@@ -104,7 +105,11 @@ const DisplayController = () => {
 
       switch (LogicalCellValue) {
         case '_':
-          cellSymbolDiv.dataset.turn = currentPlayer.getSymbol();
+          if (gameController.getCurrentPlayer().getType() === 'Human') {
+            cellSymbolDiv.dataset.turn = currentPlayer.getSymbol();
+          } else {
+            cellSymbolDiv.dataset.turn = '';
+          }
           cellSymbolDiv.dataset.set = '';
           break;
         case 'X':
@@ -170,6 +175,7 @@ const DisplayController = () => {
       const winner = gameController.getWinner();
       resultModalMessageP.dataset.winner = winner.getSymbol();
       resultModalWinnerSymbolDiv.dataset.winner = winner.getSymbol();
+      resultModalMessageP.textContent = 'Won the game!';
     }
     toggleElement(resultModalContainer);
   };
@@ -193,13 +199,14 @@ const DisplayController = () => {
   const aiVsAiGameLoop = () => {
     let i = 1;
     while (i < 10) {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         if (!gameController.isGameOver()) {
           gameController.playAI();
           gameController.switchCurrentPlayer();
           renderGame();
         }
       }, 2000 * i);
+      timeoutIdList.push(id);
 
       i += 1;
     }
@@ -212,11 +219,12 @@ const DisplayController = () => {
     if (player1.type === 'AI' && player2.type === 'AI') {
       aiVsAiGameLoop();
     } else if (player1.type === 'AI') {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         gameController.playAI();
         gameController.switchCurrentPlayer();
         renderGame();
       }, 2000);
+      timeoutIdList.push(id);
     }
   };
 
@@ -338,11 +346,12 @@ const DisplayController = () => {
         gameController.getCurrentPlayer().getType() === 'AI' &&
         !gameController.isGameOver()
       ) {
-        setTimeout(() => {
+        const id = setTimeout(() => {
           gameController.playAI();
           gameController.switchCurrentPlayer();
           renderGame();
         }, 2000);
+        timeoutIdList.push(id);
       }
     };
 
@@ -354,6 +363,8 @@ const DisplayController = () => {
 
     restartBtn.addEventListener('click', () => {
       applyTransition(restartBtn);
+
+      timeoutIdList.forEach((id) => clearTimeout(id));
 
       const player1 = getPlayerData(
         player1TypeRadios,
@@ -367,18 +378,7 @@ const DisplayController = () => {
         player2AILevelSelect
       );
 
-      gameController.startGame(player1, player2);
-      renderGame();
-
-      if (player1.type === 'AI' && player2.type === 'AI') {
-        aiVsAiGameLoop();
-      } else if (player1.type === 'AI') {
-        setTimeout(() => {
-          gameController.playAI();
-          gameController.switchCurrentPlayer();
-          renderGame();
-        }, 2000);
-      }
+      startGame(player1, player2);
     });
     restartBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
@@ -387,6 +387,8 @@ const DisplayController = () => {
     quitBtn.addEventListener('click', () => {
       gameController.resetGame();
       applyTransition(quitBtn);
+
+      timeoutIdList.forEach((id) => clearTimeout(id));
 
       player1NameInput.value = '';
       player2NameInput.value = '';
@@ -408,6 +410,8 @@ const DisplayController = () => {
     const restartBtnClickListener = (e) => {
       applyTransition(e.target);
 
+      timeoutIdList.forEach((id) => clearTimeout(id));
+
       const player1 = getPlayerData(
         player1TypeRadios,
         player1NameInput,
@@ -425,6 +429,8 @@ const DisplayController = () => {
 
     const quitBtnClickHandler = (e) => {
       applyTransition(e.target);
+
+      timeoutIdList.forEach((id) => clearTimeout(id));
 
       gameController.resetGame();
 
