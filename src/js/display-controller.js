@@ -184,6 +184,7 @@ const DisplayController = () => {
     updateGameStatus();
     updateGameBoard();
     if (gameController.isGameOver()) {
+      timeoutIdList.forEach((id) => clearTimeout(id));
       setTimeout(() => {
         showGameResult();
       }, 1000);
