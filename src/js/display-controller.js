@@ -205,6 +205,21 @@ const DisplayController = () => {
     }
   };
 
+  const startGame = (player1, player2) => {
+    gameController.startGame(player1, player2);
+    renderGame();
+
+    if (player1.type === 'AI' && player2.type === 'AI') {
+      aiVsAiGameLoop();
+    } else if (player1.type === 'AI') {
+      setTimeout(() => {
+        gameController.playAI();
+        gameController.switchCurrentPlayer();
+        renderGame();
+      }, 2000);
+    }
+  };
+
   const handleGameInitializerSection = () => {
     const handlePlayerTypeChange = (
       playerTypeRadios,
@@ -263,18 +278,7 @@ const DisplayController = () => {
         return;
       }
 
-      gameController.startGame(player1, player2);
-      renderGame();
-
-      if (player1.type === 'AI' && player2.type === 'AI') {
-        aiVsAiGameLoop();
-      } else if (player1.type === 'AI') {
-        setTimeout(() => {
-          gameController.playAI();
-          gameController.switchCurrentPlayer();
-          renderGame();
-        }, 2000);
-      }
+      startGame(player1, player2);
     };
 
     handlePlayerTypeChange(
@@ -349,6 +353,8 @@ const DisplayController = () => {
     });
 
     restartBtn.addEventListener('click', () => {
+      applyTransition(restartBtn);
+
       const player1 = getPlayerData(
         player1TypeRadios,
         player1NameInput,
@@ -363,7 +369,16 @@ const DisplayController = () => {
 
       gameController.startGame(player1, player2);
       renderGame();
-      applyTransition(restartBtn);
+
+      if (player1.type === 'AI' && player2.type === 'AI') {
+        aiVsAiGameLoop();
+      } else if (player1.type === 'AI') {
+        setTimeout(() => {
+          gameController.playAI();
+          gameController.switchCurrentPlayer();
+          renderGame();
+        }, 2000);
+      }
     });
     restartBtn.addEventListener('transitionend', (e) => {
       removeClickedClass(e);
@@ -391,6 +406,8 @@ const DisplayController = () => {
     const closeBtn = document.querySelector('.result-modal__close-btn');
 
     const restartBtnClickListener = (e) => {
+      applyTransition(e.target);
+
       const player1 = getPlayerData(
         player1TypeRadios,
         player1NameInput,
@@ -403,14 +420,13 @@ const DisplayController = () => {
         player2AILevelSelect
       );
 
-      gameController.startGame(player1, player2);
-      renderGame();
-      applyTransition(e.target);
+      startGame(player1, player2);
     };
 
     const quitBtnClickHandler = (e) => {
-      gameController.resetGame();
       applyTransition(e.target);
+
+      gameController.resetGame();
 
       player1NameInput.value = '';
       player2NameInput.value = '';
