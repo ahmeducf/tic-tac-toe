@@ -256,7 +256,6 @@ const DisplayController = () => {
 
     const startGameBtnListener = (e) => {
       e.preventDefault();
-      applyTransition(e.target);
 
       const player1 = getPlayerData(
         player1TypeRadios,
@@ -287,6 +286,7 @@ const DisplayController = () => {
         return;
       }
 
+      applyTransition(e.target);
       startGame(player1, player2);
     };
 
