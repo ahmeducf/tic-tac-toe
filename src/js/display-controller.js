@@ -11,6 +11,8 @@ import {
   GAME_QUIT,
   POST_CELL_CLICKED,
 } from './event-types.js';
+import aiPlayerIcon from '../assets/player-ai.svg';
+import humanPlayerIcon from '../assets/player-human.svg';
 
 /* DOM Elements */
 
@@ -69,9 +71,9 @@ const resultModalContainer = document.querySelector('.result-modal-container');
 
 const setPlayerIcon = (playerIconImg, playerType) => {
   if (playerType === 'AI') {
-    playerIconImg.setAttribute('src', './assets/player-ai.svg');
+    playerIconImg.setAttribute('src', aiPlayerIcon);
   } else {
-    playerIconImg.setAttribute('src', './assets/player-human.svg');
+    playerIconImg.setAttribute('src', humanPlayerIcon);
   }
 };
 

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    index: './src/index.js',
+    index: './src/js/index.js',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Restaurant Page',
+      title: 'Tic Tac Toe',
       template: './src/index.html',
     }),
   ],
@@ -23,6 +23,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
