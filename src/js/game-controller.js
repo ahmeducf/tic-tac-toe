@@ -192,17 +192,6 @@ const GameController = () => {
   };
 
   /**
-   * restartGame restarts the game
-   */
-  const restartGame = () => {
-    resetGame();
-    setCurrentPlayer(player1);
-    if (currentPlayer.getType() === 'AI') {
-      playAI();
-    }
-  };
-
-  /**
    * startGame starts the game
    * If AI V.S AI, the game begins automatically until game over
    * If AI V.S Human, the game begins with the first player

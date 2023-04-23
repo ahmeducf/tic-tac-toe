@@ -35,5 +35,8 @@
       "npx prettier --write"
     ],
     "*.{html,css,md}": "prettier --write"
+  },
+  "dependencies": {
+    "pubsub-js": "^1.9.4"
   }
 }
