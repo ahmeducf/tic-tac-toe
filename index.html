@@ -1,1 +1,244 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1A2B33"/><meta name="msapplication-navbutton-color" content="#1A2B33"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="#1A2B33"/><meta name="description" content="Tic Tac Toe"/><meta name="keywords" content="Tic Tac Toe"/><meta name="author" content="Ahmed Salah"/><link rel="apple-touch-icon" sizes="180x180" href="4f404f502aca7a9b8789.png"/><link rel="icon" type="image/png" sizes="32x32" href="e8d99eb1f99e2941a66f.png"/><link rel="icon" type="image/png" sizes="16x16" href="37133134a4317ad1dfe4.png"/><link rel="manifest" href="f43cd7781f152c53e5d6.webmanifest"/><title><%= htmlWebpackPlugin.options.title %></title><script defer="defer" src="runtime.bundle.js"></script><script defer="defer" src="index.bundle.js"></script></head><body><section class="disabled game"><header><div class="logo"><img src="6a3d7c7d71604d604996.svg" alt="Tic Tac Toe"/></div></header><div class="game__actions"><button class="game__restart-btn"><img src="5233068679491c1d7f0f.svg" alt="Restart Game"/></button> <button class="game__quit-btn"><img src="395e611be7824283ee37.svg" alt="Quit Game"/></button></div><div class="game__status"><div class="game__status-player"><div class="game__status-player-id"><div class="game__status-player-symbol"><img src="0b42b1fa90bcc26b3e3f.svg" alt="X"/></div><div class="game__status-player-name">Player 1</div></div><div class="game__status-player-icon"><img src="d77f16a6de290f44d870.svg" alt="Human Player"/></div></div><div class="game__status-message"><div class="status-message__turn-icon" data-turn=""></div><p class="status-message__text">Turn</p></div><div class="game__status-player"><div class="game__status-player-id"><div class="game__status-player-symbol"><img src="7608cc08ec6b0a3d77ec.svg" alt="O"/></div><div class="game__status-player-name">Player 2</div></div><div class="game__status-player-icon"><img src="2a415cd46066c6c8522c.svg" alt="AI Player"/></div></div></div><main><div class="game__board"><button class="game__board-cell" data-cell-row="0" data-cell-col="0"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="0" data-cell-col="1"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="0" data-cell-col="2"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="1" data-cell-col="0"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="1" data-cell-col="1"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="1" data-cell-col="2"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="2" data-cell-col="0"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="2" data-cell-col="1"><div class="cell-symbol" data-turn="" data-set=""></div></button> <button class="game__board-cell" data-cell-row="2" data-cell-col="2"><div class="cell-symbol" data-turn="" data-set=""></div></button></div></main></section><section class="game-initializer"><header><div class="logo"><img src="6a3d7c7d71604d604996.svg" alt="Tic Tac Toe"/></div></header><main><form class="game-initializer__options"><div class="player"><div class="player__symbol"><img src="e4fcf8acac5b6a2cbb64.svg" alt="X"/></div><div class="player__icon"><img src="d77f16a6de290f44d870.svg" alt="Human Player"/></div><div class="player__type-selector"><input type="radio" name="player1-type" id="player1-human" value="human" checked="checked"/> <label for="player1-human">Human</label> <input type="radio" name="player1-type" id="player1-ai" value="AI"/> <label for="player1-ai">AI</label></div><div class="player__name"><label for="player1-name">Player Name</label> <input id="player1-name" placeholder="Enter player name ..." required autocomplete="off"/></div><div class="disabled player__ai-type"><label for="ai1-type">AI Type</label> <select name="player__ai-type" id="ai1-type"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option><option value="unbeatable">Unbeatable</option></select></div></div><div class="player"><div class="player__symbol"><img src="d7ebaa0400c018517049.svg" alt="O"/></div><div class="player__icon"><img src="2a415cd46066c6c8522c.svg" alt="AI Player"/></div><div class="player__type-selector"><input type="radio" name="player2-type" id="player2-human" value="Human"/> <label for="player2-human">Human</label> <input type="radio" name="player2-type" id="player2-ai" value="AI" checked="checked"/> <label for="player2-ai">AI</label></div><div class="disabled player__name"><label for="player2-name">Player Name</label> <input id="player2-name" placeholder="Enter player name ..." autocomplete="off"/></div><div class="player__ai-type"><label for="ai2-type">AI Type</label> <select name="player__ai-type" id="ai2-type" required><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option><option value="unbeatable">Unbeatable</option></select></div></div><div class="game-initializer__start"><button class="start-game-btn">Start Game</button></div></form></main></section><div class="disabled result-modal-container"><section class="result-modal"><div class="result-modal__content"><div class="result-modal__header"><h2 class="result-modal__title">Game Over</h2><button class="result-modal__close-btn"><img src="ee4be1a6ffd88822229f.svg" alt="Close"/></button></div><div class="result-modal__body"><div class="result-modal__message" data-winner=""><div class="result-modal__winner-symbol" data-winner=""></div><p></p></div></div><div class="result-modal__footer"><button class="result-modal__restart-btn">Play Again</button> <button class="result-modal__quit-btn">Quit</button></div></div></section></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1A2B33" />
+    <meta name="msapplication-navbutton-color" content="#1A2B33" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#1A2B33" />
+    <meta name="description" content="Tic Tac Toe" />
+    <meta name="keywords" content="Tic Tac Toe" />
+    <meta name="author" content="Ahmed Salah" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="4f404f502aca7a9b8789.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="e8d99eb1f99e2941a66f.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="37133134a4317ad1dfe4.png"
+    />
+    <link rel="manifest" href="f43cd7781f152c53e5d6.webmanifest" />
+    <title>Tic Tac Toe</title>
+  <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
+  <body class="preload">
+    <section class="disabled game">
+      <header>
+        <div class="logo">
+          <img src="6a3d7c7d71604d604996.svg" alt="Tic Tac Toe" />
+        </div>
+      </header>
+
+      <div class="game__actions">
+        <button class="game__restart-btn">
+          <img src="5233068679491c1d7f0f.svg" alt="Restart Game" />
+        </button>
+        <button class="game__quit-btn">
+          <img src="395e611be7824283ee37.svg" alt="Quit Game" />
+        </button>
+      </div>
+
+      <div class="game__status">
+        <div class="game__status-player">
+          <div class="game__status-player-id">
+            <div class="game__status-player-symbol">
+              <img src="0b42b1fa90bcc26b3e3f.svg" alt="X" />
+            </div>
+            <div class="game__status-player-name">Player 1</div>
+          </div>
+          <div class="game__status-player-icon">
+            <img src="d77f16a6de290f44d870.svg" alt="Human Player" />
+          </div>
+        </div>
+
+        <div class="game__status-message">
+          <div class="status-message__turn-icon" data-turn=""></div>
+          <p class="status-message__text">Turn</p>
+        </div>
+
+        <div class="game__status-player">
+          <div class="game__status-player-id">
+            <div class="game__status-player-symbol">
+              <img src="7608cc08ec6b0a3d77ec.svg" alt="O" />
+            </div>
+            <div class="game__status-player-name">Player 2</div>
+          </div>
+          <div class="game__status-player-icon">
+            <img src="2a415cd46066c6c8522c.svg" alt="AI Player" />
+          </div>
+        </div>
+      </div>
+
+      <main>
+        <div class="game__board">
+          <button class="game__board-cell" data-cell-row="0" data-cell-col="0">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="0" data-cell-col="1">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="0" data-cell-col="2">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="1" data-cell-col="0">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="1" data-cell-col="1">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="1" data-cell-col="2">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="2" data-cell-col="0">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="2" data-cell-col="1">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+          <button class="game__board-cell" data-cell-row="2" data-cell-col="2">
+            <div class="cell-symbol" data-turn="" data-set=""></div>
+          </button>
+        </div>
+      </main>
+    </section>
+
+    <section class="game-initializer">
+      <header>
+        <div class="logo">
+          <img src="6a3d7c7d71604d604996.svg" alt="Tic Tac Toe" />
+        </div>
+      </header>
+      <main>
+        <form class="game-initializer__options">
+          <div class="player">
+            <div class="player__symbol">
+              <img src="e4fcf8acac5b6a2cbb64.svg" alt="X" />
+            </div>
+            <div class="player__icon">
+              <img src="d77f16a6de290f44d870.svg" alt="Human Player" />
+            </div>
+            <div class="player__type-selector">
+              <input
+                type="radio"
+                name="player1-type"
+                id="player1-human"
+                value="human"
+                checked
+              />
+              <label for="player1-human">Human</label>
+              <input
+                type="radio"
+                name="player1-type"
+                id="player1-ai"
+                value="AI"
+              />
+              <label for="player1-ai">AI</label>
+            </div>
+            <div class="player__name">
+              <label for="player1-name">Player Name</label>
+              <input
+                type="text"
+                id="player1-name"
+                placeholder="Enter player name ..."
+                required
+                autocomplete="off"
+              />
+            </div>
+            <div class="disabled player__ai-type">
+              <label for="ai1-type">AI Type</label>
+              <select name="player__ai-type" id="ai1-type">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="unbeatable">Unbeatable</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="player">
+            <div class="player__symbol">
+              <img src="d7ebaa0400c018517049.svg" alt="O" />
+            </div>
+            <div class="player__icon">
+              <img src="2a415cd46066c6c8522c.svg" alt="AI Player" />
+            </div>
+            <div class="player__type-selector">
+              <input
+                type="radio"
+                name="player2-type"
+                id="player2-human"
+                value="Human"
+              />
+              <label for="player2-human">Human</label>
+              <input
+                type="radio"
+                name="player2-type"
+                id="player2-ai"
+                value="AI"
+                checked
+              />
+              <label for="player2-ai">AI</label>
+            </div>
+            <div class="disabled player__name">
+              <label for="player2-name">Player Name</label>
+              <input
+                type="text"
+                id="player2-name"
+                placeholder="Enter player name ..."
+                autocomplete="off"
+              />
+            </div>
+            <div class="player__ai-type">
+              <label for="ai2-type">AI Type</label>
+              <select name="player__ai-type" id="ai2-type" required>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="unbeatable">Unbeatable</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="game-initializer__start">
+            <button class="start-game-btn">Start Game</button>
+          </div>
+        </form>
+      </main>
+    </section>
+
+    <div class="disabled result-modal-container">
+      <section class="result-modal">
+        <div class="result-modal__content">
+          <div class="result-modal__header">
+            <h2 class="result-modal__title">Game Over</h2>
+            <button class="result-modal__close-btn">
+              <img src="ee4be1a6ffd88822229f.svg" alt="Close" />
+            </button>
+          </div>
+
+          <div class="result-modal__body">
+            <div class="result-modal__message" data-winner="">
+              <div class="result-modal__winner-symbol" data-winner=""></div>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="result-modal__footer">
+            <button class="result-modal__restart-btn">Play Again</button>
+            <button class="result-modal__quit-btn">Quit</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
