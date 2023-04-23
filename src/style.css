@@ -45,6 +45,14 @@ html {
   vertical-align: baseline;
 }
 
+.preload * {
+  transition: none !important;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
 header {
   width: 85%;
   height: 100px;
