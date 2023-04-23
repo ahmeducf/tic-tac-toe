@@ -1,0 +1,10 @@
+export const GAME_STARTED = Symbol('GAME_STARTED');
+export const GAME_STARTED_AI_VS_AI = Symbol('GAME_STARTED_AI_VS_AI');
+export const GAME_RESTARTED = Symbol('GAME_RESTARTED');
+export const GAME_QUIT = Symbol('GAME_QUIT');
+export const GAME_ENDED = Symbol('GAME_ENDED');
+export const AI_TURN = Symbol('AI_TURN');
+export const STATUS_CHANGED = Symbol('STATUS_CHANGED');
+export const BOARD_CHANGED = Symbol('BOARD_CHANGED');
+export const CELL_CLICKED = Symbol('CELL_CLICKED');
+export const POST_CELL_CLICKED = Symbol('POST_CELL_CLICKED');
